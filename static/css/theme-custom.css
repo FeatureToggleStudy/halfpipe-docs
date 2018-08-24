@@ -1,0 +1,93 @@
+#body .nav {
+    display: none;
+}
+
+h1 {
+    text-transform: none;
+}
+
+#body .padding {
+    padding: 1rem 3rem;
+}
+
+#chapter #body-inner {
+    max-width: 90%;
+}
+
+.language-yaml, .language-yaml .hljs-number {
+    color: #b5bd68;
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+}
+
+.hljs-attr {
+    color: #66d9ef;
+}
+
+.feature-item {
+    width: 31%;
+    border: 1px solid #ccc;
+    margin: 1%;
+    padding: 1%;
+    text-align: center;
+    float: left;
+}
+
+body {
+    background-image: url(/images/halfpipe-banner3.jpg);
+    background-repeat: no-repeat;
+    background-size: 100% 182px;
+    background-attachment: fixed;
+}
+
+body.content-page {
+    background-size: 300px 182px;
+}
+
+body.home #body {
+    margin-top: 182px;
+}
+
+#sidebar {
+    background-color: transparent;
+}
+
+#sidebar div.ps-container {
+    background-color: #322A38;
+}
+
+#sidebar #header-wrapper {
+    background-color: transparent;
+    border: 0;
+}
+#sidebar .searchbox {
+	border-color: #fff;
+    background: #333;
+    color: #fff;
+}
+
+section#footer {
+    margin: 2rem 0;
+    padding: 0;
+}
+
+ul#external-links {
+    border-top: 1px solid #fff;
+    padding: 2rem 0 0 0;
+}
+
+ul#external-links li i {
+    font-size: 0.8rem;
+}
+
+#sidebar nav#TableOfContents {
+    padding: 10px 0 0 0 !important;
+}
+
+#sidebar nav#TableOfContents ul li {
+    padding-left: 0px;
+}
+
+#sidebar nav#TableOfContents ul li ul li {
+    padding-left: 10px;
+}

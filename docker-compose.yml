@@ -1,0 +1,9 @@
+version: '3'
+services:
+  app:
+    image: eu.gcr.io/halfpipe-io/hugo
+    volumes:
+    - .:/home/dev/code
+    command: hugo serve --buildDrafts --bind 0.0.0.0
+    ports:
+    - "1313:1313"

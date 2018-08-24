@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'\n\t'
+
+PACKAGE="target/website.zip"
+
+cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+hugo
+echo "Packaging as $PACKAGE"
+mkdir -p "$(dirname $PACKAGE)"
+(
+    cd public
+    touch Staticfile # required by the CF staticfile buildpack
+    zip -qr "../$PACKAGE" .
+)

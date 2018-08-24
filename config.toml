@@ -1,0 +1,16 @@
+baseurl = "https://halfpipe-docs.springernature.app/"
+languageCode = "en-us"
+metadataformat = "yaml"
+title = "Halfpipe"
+theme = "hugo-learn-theme"
+
+
+[params]
+author = "Engineering Enablement"
+description = "Halfpipe docs"
+disableInlineCopyToClipBoard = true
+themeVariant = "custom"
+editURL = "https://github.com/springernature/halfpipe-docs/blob/master/"
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
