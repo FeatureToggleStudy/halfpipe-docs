@@ -91,3 +91,7 @@ ul#external-links li i {
 #sidebar nav#TableOfContents ul li ul li {
     padding-left: 10px;
 }
+
+#sidebar div.ps-container {
+    background-color: #333333;
+}
