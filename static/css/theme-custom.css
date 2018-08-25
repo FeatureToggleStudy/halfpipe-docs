@@ -95,3 +95,12 @@ ul#external-links li i {
 #sidebar div.ps-container {
     background-color: #333333;
 }
+
+#sidebar ul.topics > li.parent {
+    background: #252525;
+}
+
+
+#sidebar ul.topics > li.active {
+    background: #252525;
+}
