@@ -76,7 +76,7 @@ Concourse is a neat CI system where **everything** runs in ephemeral Docker cont
 
 ....The thing is that the pipeline definitions can become a tad verbose and confusing at times. That's why Halfpipe was created.
 
-If you have complex needs that cannot be fulfilled by Halfpipe, you can always hand-craft the pipeline, like a true artisan, with the help of the [Concourse Docs](https://concourse-ci.org.org/) and upload it with the CLI!
+If you have complex needs that cannot be fulfilled by Halfpipe, you can always hand-craft the pipeline, like a true artisan, with the help of the [Concourse Docs](https://concourse-ci.org/) and upload it with the CLI!
 
 ### Vault
 
