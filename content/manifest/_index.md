@@ -274,7 +274,7 @@ Examples
 ### deploy-cf
 deploy-cf is surprise, surprise used to deployed an app to Cloud Foundry.
 
-[Here you can find more information](/docs/cf-deployment/) about how deploy-cf works under the hood!
+[Here you can find more information](/cf-deployment/) about how deploy-cf works under the hood!
 
 Schema
 ```yaml
@@ -358,7 +358,7 @@ Schema
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
-Example using the [Halfpipe Private Registry](/docs/docker-registry/) - username and password are not required.
+Example using the [Halfpipe Private Registry](/docker-registry/) - username and password are not required.
 
 ```yaml
 - type: docker-push
@@ -379,7 +379,7 @@ Example using official Docker Registry
 
 This task is designed to run in a `producer's` pipeline. It helps running a `consumer's` legacy app-anatomy/auto-pipeline style CDC tests.
 
-For more information about migrating CDCs from auto-pipelines see [legacy CDCs](/docs/legacy-cdcs)
+For more information about migrating CDCs from auto-pipelines see [legacy CDCs](/legacy-cdcs)
 
 Schema
 ```yaml

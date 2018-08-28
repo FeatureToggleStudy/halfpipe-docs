@@ -7,7 +7,7 @@ weight: 80
 We use the Google Container Registry as the main private docker registry for Halfpipe projects.
 You can also use this registry from your local workstation, to push and pull images. To do so please use the credentials we already provided to you in vault.
 
-Please read about [Vault](https://docs.halfpipe.io/docs/vault) first.
+Please read about [Vault](https://docs.halfpipe.io/vault) first.
 
 ### Docker login
 ```

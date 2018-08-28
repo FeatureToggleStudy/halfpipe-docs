@@ -85,4 +85,4 @@ token_duration         768h
 ...
 ```
 
-If you have not run a `vault token renew` within that 768h duration your token will expire. To solve simply [`login`](/docs/vault/#Login). again.
+If you have not run a `vault token renew` within that 768h duration your token will expire. To solve simply [`login`](/vault/#Login). again.

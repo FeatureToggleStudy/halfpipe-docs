@@ -50,7 +50,7 @@ If your pipeline does not fit into the model that Halfpipe operates over, there 
 
 ### CF deployment
 
-Both Auto Pipeline and Halfpipe deploys to CF with zero downtime. At the end of the day the end result is the same but the way we get there is very different. Auto Pipeline will use runtime resolving whereas Halfpipe will create a execution list, and then execute it. Another big difference is that the deployment happens with a [CF plugin](/docs/cf-deployment/) in Halfpipe whereas Auto Pipeline simply wraps the CF CLI and parses the output to take decisions.
+Both Auto Pipeline and Halfpipe deploys to CF with zero downtime. At the end of the day the end result is the same but the way we get there is very different. Auto Pipeline will use runtime resolving whereas Halfpipe will create a execution list, and then execute it. Another big difference is that the deployment happens with a [CF plugin](/cf-deployment/) in Halfpipe whereas Auto Pipeline simply wraps the CF CLI and parses the output to take decisions.
 
 ### Documentation
 
@@ -81,7 +81,7 @@ environment-groups:
 ```
 
 
-To migrate them the easiest way to do so is to simply `cf env APP-DEPLOYED-BY-AUTO-PIPELINES` to read the secrets and then manually add them to Vault. More info on how Vault works can be found [here](/docs/vault/)
+To migrate them the easiest way to do so is to simply `cf env APP-DEPLOYED-BY-AUTO-PIPELINES` to read the secrets and then manually add them to Vault. More info on how Vault works can be found [here](/vault/)
 
 ### Cloud Foundry routes.
 

@@ -53,9 +53,9 @@ The cli is master of the universe and she's pretty friendly at that.
 
 ```text
 $ halfpipe
-Halfpipe
-	'.halfpipe.io' does not exist
-	[see: https://docs.halfpipe.io/docs/halfpipe#file-error-does-not-exist ]
+Halfpipe (https://docs.halfpipe.io/docs/manifest/#Manifest)
+        Errors:
+	        * couldn't find any of the allowed [.halfpipe.io .halfpipe.io.yml .halfpipe.io.yaml] files
 ```
 
 Whoa, a link with up to date information on how to fix the error? NEAT!

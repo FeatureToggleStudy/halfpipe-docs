@@ -1,4 +1,4 @@
-baseurl = "https://halfpipe-docs.springernature.app/"
+baseurl = "https://docs.halfpipe.io/"
 languageCode = "en-us"
 metadataformat = "yaml"
 title = "Halfpipe"
