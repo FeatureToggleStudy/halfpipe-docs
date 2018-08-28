@@ -53,7 +53,7 @@ The cli is master of the universe and she's pretty friendly at that.
 
 ```text
 $ halfpipe
-Halfpipe (https://docs.halfpipe.io/docs/manifest/#Manifest)
+Halfpipe (https://docs.halfpipe.io/manifest/#Manifest)
         Errors:
 	        * couldn't find any of the allowed [.halfpipe.io .halfpipe.io.yml .halfpipe.io.yaml] files
 ```
