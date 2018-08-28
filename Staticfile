@@ -1,0 +1,3 @@
+root: .
+status_codes:
+  404: /404.html

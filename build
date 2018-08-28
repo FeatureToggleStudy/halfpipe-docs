@@ -10,5 +10,6 @@ echo "Packaging as $PACKAGE"
 mkdir -p "$(dirname $PACKAGE)"
 (
     cd public
+    cp ../Staticfile .
     zip -qr "../$PACKAGE" .
 )
