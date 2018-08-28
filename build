@@ -10,6 +10,5 @@ echo "Packaging as $PACKAGE"
 mkdir -p "$(dirname $PACKAGE)"
 (
     cd public
-    touch Staticfile # required by the CF staticfile buildpack
     zip -qr "../$PACKAGE" .
 )
