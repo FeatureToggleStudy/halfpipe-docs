@@ -38,8 +38,8 @@ If you execute `halfpipe upload` it works just like normal with two exception
   * `$BRANCH` comes from the `repo.branch` field in the `.halfpipe.io` manifest.
   
   
-## Example.
+## Example
 
 [Our example repo](https://github.com/springernature/halfpipe-examples/tree/add-cool-feature/nodejs) contains an example that deploys to cf from a branch.
-to CF. [Here is a diff between the it and master](https://github.com/springernature/halfpipe-examples/compare/master...add-cool-feature)
+to CF. [Here is a diff between the branch and master](https://github.com/springernature/halfpipe-examples/compare/master...add-cool-feature)
 
