@@ -1,0 +1,20 @@
+{{ partial "header.html" . }}
+<span id="sidebar-toggle-span">
+<a href="#" id="sidebar-toggle" data-sidebar-toggle=""><i class="fas fa-bars"></i> navigation</a>
+</span>
+
+<section id="body" style="margin-left:0px;">
+  <div id="overlay"></div>
+  <div id="chapter">
+    <div id="body-inner">
+      <p>
+      </p>
+      <p>{{T "message-404"}}</p>
+      <p></p>
+      <p><a href='{{ "" | relLangURL }}'>{{T "Go-to-homepage"}}</a></p>
+      <p><img src='{{ "/images/gopher-404.jpg" | relURL }}' style="width:50%"></img></p>
+    </div>
+  </div>
+</section>
+
+{{ partial "footer.html" . }}
