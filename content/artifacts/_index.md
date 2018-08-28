@@ -1,6 +1,6 @@
 ---
 title: Artifacts
-weight: 100
+weight: 41
 ---
 
 ## Download an artifact from a build locally

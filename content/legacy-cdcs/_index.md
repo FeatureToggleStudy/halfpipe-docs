@@ -1,6 +1,6 @@
 ---
 title: Legacy CDCs
-weight: 120
+weight: 41
 ---
 
 To ease migration from the auto-pipeline system, halfpipe has special support for running legacy "CDC" tests.

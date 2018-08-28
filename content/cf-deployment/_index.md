@@ -1,6 +1,6 @@
 ---
 title: CF Deployment
-weight: 90
+weight: 41
 ---
 
 Our deployment to CF uses the nifty [halfpipe-cf CF plugin](https://github.com/springernature/halfpipe-cf-plugin).

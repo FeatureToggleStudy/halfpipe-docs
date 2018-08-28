@@ -91,23 +91,26 @@ trigger_interval: 24h
 ## repo
 The optional top level dict `repo` dictates which git repo halfpipe will operate on.
 
-By default, if no repo.uri is defined the halfpipe-cli will try to resolve the git uri for you.
-
-If `uri` points to a private repository you may also need to set `private_key`. If no private key is specified, Halfpipe will default to your team's GitHub key `((github.private_key))` which is pre-populated in Vault. See [Vault](/docs/vault/#pre-populated-secrets-in-vault) for more info.
-
-`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
-
-`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it
-
 Schema
 ```yaml
 repo:
-  uri: optional(string)
-  private_key: optional(string)
+  uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
+  private_key: optional(string, default="((github.private_key))")
   git_crypt_key: optional(string)
   watched_paths: optional([]string)
   ignored_paths: optional([]string)
+  branch: optional(string)
 ```
+
+`uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
+
+`private_key` allows you to specify the private key to use when cloning the repo.
+
+`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
+
+`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
+
+`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch
 
 Examples
 ```yaml
