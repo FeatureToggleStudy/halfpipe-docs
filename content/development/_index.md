@@ -11,7 +11,7 @@ weight: 130
 The halfpipe cli. The meat of the project.
 
 ### Halfpipe Website
-<https://github.com/springernature/halfpipe-website>
+<https://github.com/springernature/halfpipe-docs>
 
 This website, i.e the docs.
 

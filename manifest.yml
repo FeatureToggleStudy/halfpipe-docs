@@ -1,8 +1,8 @@
 applications:
-- name: halfpipe-docs-hugo
+- name: halfpipe-docs
   memory: 24M
   instances: 2
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.4.27
   routes:
-  - route: halfpipe-docs-hugo.springernature.app
-  - route: halfpipe-docs-hugo.public.springernature.app
+  - route: halfpipe-docs.springernature.app
+  - route: docs.halfpipe.io
