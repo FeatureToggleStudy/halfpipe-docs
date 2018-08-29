@@ -581,3 +581,23 @@ tasks:
 ```
 
 This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live.
+
+### Dummy Tasks
+
+Sometimes there's the need to have a dummy task with the solo purpose of triggering other tasks.
+In case you have this need, you can just run an echo command in that task.
+
+Example
+```
+- type: run
+  name: deploy to live
+  script: \echo Going to deploy to live
+  docker:
+    image: alpine
+  manual_trigger: true  
+```
+This task will just print the message `Going to deploy to live`, nothing else. 
+Then, the tasks that depend on this one will be automatically triggered.
+
+The docker image used here is `alpine` because it's a very light one, so the download is very fast.
+We need a docker image because every task in Concourse runs in a docker container.
