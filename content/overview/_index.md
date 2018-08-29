@@ -27,13 +27,15 @@ Now you can!
 
 Halfpipe is a project that allows you to create Concourse pipelines and store secrets in Vault. Simple really.
 
-The pipelines can do 3 main things:
+The pipelines can do 5 main things:
 
 * Run scripts, like `test.sh`, `ci/build.sh` etc. Your imagination is the limiting factor here.
 * Deploy to Cloud Foundry
 * Build and push Docker images.
+* Run "CDC's"
+* Deploy MarkLogic modules
 
-A core design philosophy is that there is **no** magic involved!
+A core design philosophy is that there is **no** runtime resolving or configuration!
 
 ## Components
 

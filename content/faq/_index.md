@@ -42,9 +42,15 @@ $ fly -t ci hijack --url=.. --step=.. "/bin/sh"
 Sometimes it's useful to download something from the container, a built jar, a test report, etc.
 
 ```text
-$ fly -t ci hijack --url=.. --step=.. "cat" "git/README.md" > /tmp/README-from-container.md
+$ fly -t your-team hijack --url=.. --step=.. "cat" "git/README.md" > /tmp/README-from-container.md
 $ wc -l /tmp/README-from-container.md
 37 /tmp/README-from-container.md
+```
+
+If you want to download more than one file the following snipped will tar up a folder, base64 encode it, transfer it over the wire, base64 decode it and finally save it as a tar on your machine
+
+```text
+fly -t your-team hijack -j --url=.. --step=.. -- bash -c "tar czf - git/target/reports | base64" | base64 -D > boo.tgz
 ```
 
 ### How can I get a build number?

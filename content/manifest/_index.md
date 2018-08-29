@@ -43,7 +43,7 @@ The mandatory field `pipeline` must be set to the name of the pipeline in concou
 The value of this field is used to construct paths for vault secrets and artifacts.
 
 ## slack_channel
-The optional field `slack_channel` can be set to enable a notification when any of the tasks fail. Must be a quoted string starting with `#`.
+The optional field `slack_channel` can be set to enable a notification when any of the tasks fail. Must be a quoted as `#` is the mark of a comment in YAML.
 
 Schema
 ```yaml
@@ -303,7 +303,7 @@ Schema
 
 `deploy_artifact` the path to a file or directory to push to CF, which has been saved in a previous `run` or `docker-compose` task with `save_artifacts`. The path must be relative to the `.halfpipe.io` file.
 
-`manifest` defaults to `manifest.yml`, relative to the `.halfpipe.io` file. To use an artifact from a previous task you must use the path `../artifacts/<saved-artifact-path>`.
+`manifest` defaults to `manifest.yml`, relative to the `.halfpipe.io` file. If you have generated a manifest in a previous task that you wish to you you must use the path `../artifacts/<path-to-saved-manifest>`.
 
 `pre_promote` is a list of run tasks, that will be executed after the app has been deployed as a candidate but before the app gets promoted to live. The pre promote jobs will get the environment variable `TEST_ROUTE` injected with the route to the candidate app.
 

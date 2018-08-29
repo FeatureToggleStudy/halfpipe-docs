@@ -32,7 +32,7 @@ Halfpipe tries its best to not hide the details of the systems used whereas Auto
 
 ### Approach
 
-Auto Pipeline is in large part configured via conventions whereas Halfpipe is configured via, well configuration. For instance in Auto Pipeline you are required to have a file in the root of the app called `build` regardless if you need to build something or not. If you just want to test your code before pushing to CF you would have to put your test command in the `build` file. Halfpipe on the other hand takes a different approach, we provide the building blocks to describe what you want to do, when you want to do it. Both approaches have merits but the reason we went with the configuration over conventions is that its much easier to create a deterministic, well documented system without any of hidden magic/complexity which makes **A** hard to debug when something goes wrong.
+Auto Pipeline is in large part configured via conventions whereas Halfpipe is configured via, well configuration. For instance in Auto Pipeline you are required to have a file in the root of the app called `build` regardless if you need to build something or not. If you just want to test your code before pushing to CF you would have to put your test command in the `build` file. Halfpipe on the other hand takes a different approach, we provide the building blocks to describe what you want to do, when you want to do it. Both approaches have merits but the reason we went with the configuration over conventions is that its much easier to create a deterministic, well documented system without any of hidden complexity which makes Auto Pipelines hard to debug when something goes wrong.
 
 ### Secrets
 Both Auto Pipeline and Halfpipe provides a way to deal with secrets, in Auto Pipeline's case you are required to use a web-app to encrypt what you want as a secret and stick that value in the `app-anatomy.yml` file. In Halfpipe we use Vault from Hashicorp, this is a much safer approach and allows for easy evaluation and editing of the secrets trough a CLI and web interface.
@@ -46,7 +46,7 @@ This removes all of the issues with dynamic resolving and generation at runtime 
 
 ### Manually scripted pipelines
 
-If your pipeline does not fit into the model that Halfpipe operates over, there is a separate system that allows you to define "manually scripted pipeline", in practice this means that you would use a undocumented python library to write a script and stick it in a predefined git repo and if all goes well, you have a pipeline! In Halfpipe this is not needed as in effect everything is a "manually scripted pipeline"! In the case that our "manually scripted pipeline" abstraction doesn't provide what you need, then you have the power to write Concourse YAML and use that instead.
+If your pipeline does not fit into the model that Auto Pipeline operates over, there is a separate system that allows you to define "manually scripted pipeline", in practice this means that you would use a undocumented python library to write a script and stick it in a predefined git repo and if all goes well, you have a pipeline! In Halfpipe this is not needed as in effect everything is a "manually scripted pipeline"! In the case that our "manually scripted pipeline" abstraction doesn't provide what you need, then you have the power to write Concourse YAML and use that instead.
 
 ### CF deployment
 
@@ -110,7 +110,8 @@ applications:
 
 ### Cloud Foundry environment variables
 
-Environment variables set by Auto Pipeline:
+Esnvironment variables set by Auto Pipeline:
+
 * `METRICS_PREFIX`
 * `TE_COMPONENT_ENV`
 * `TE_COMPONENT_NAME`
@@ -119,6 +120,7 @@ Environment variables set by Auto Pipeline:
 * `GIT_REVISION`
 
 Environment variable set by Halfpipe
+
 * `GIT_REVISION`
 
 As you can see, Halfpipe sets a lot less. To keep using the old Auto Pipeline env vars you can add them to your Cloud Foundry manifest under `env`, or to the `vars` list of the `deploy-cf` task in halfpipe.
@@ -128,4 +130,3 @@ Halfpipe/Concourse does not have the concept of a "build version". If you curren
 The `deploy-ml-zip` and `deploy-ml-modules` tasks use `GIT_REVSION` for versioning, so projects will now have construct urls like:
 
 `http://[MARKLOGIC-SERVER]:7654/[APP_NAME]/[GIT_REVISION]/path/to/file.xqy`
-

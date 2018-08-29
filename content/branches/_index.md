@@ -8,12 +8,12 @@ weight: 41
 Please note that branch support is currently under active development and the support for it is basic!
 If you run into any problems or have use cases that are not covered do not hesitate to contact us.
 
-## Magic
+## Generated app name and app routes
 
-There is **no** magic involved.
+This features does **not** automatically generated app name or routes that wont conflict with any live apps.
 
 This means that if you have a branch that deploys to CF and you have not updated the name and routes in CF manifest on
-any of the branches that have a pipeline configured you **will** run into a situation where multiple pipelines will 
+any of the branches that have a pipeline configured you **will** run into a situation where multiple pipelines will
 deploy to the same app name, with the same routes.
 
 
@@ -32,14 +32,13 @@ configured under `repo.branch` in the `.halfpipe.io` manifest.
 
 If you execute `halfpipe upload` it works just like normal with two exception
 
-* There will be two security questions to make sure you don't do any mistakes. 
-* the name of the pipeline in concourse which will be `$PIPELINE-$BRANCH` where 
+* There will be two security questions to make sure you don't do any mistakes.
+* the name of the pipeline in concourse which will be `$PIPELINE-$BRANCH` where
   * `$PIPELINE` comes from the `pipeline` field in the `.halfpipe.io` manifest.
   * `$BRANCH` comes from the `repo.branch` field in the `.halfpipe.io` manifest.
-  
-  
+
+
 ## Example
 
 [Our example repo](https://github.com/springernature/halfpipe-examples/tree/feature-xyz/nodejs) contains an example that deploys to cf from a branch.
 to CF. [Here is a diff between the branch and master](https://github.com/springernature/halfpipe-examples/compare/master...feature-xyz)
-
