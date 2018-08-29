@@ -287,7 +287,7 @@ Schema
   username: optional(string, default="((cloudfoundry.username))")
   password: optional(string, default="((cloudfoundry.password))")
   test_domain: optional(string, default="derived from the api")
-  manifest: optional(string, default="manifest.yml relative to the halfpipe.io file")
+  manifest: optional(string, default="manifest.yml")
   vars: optional(hashmap(string, string))
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
@@ -295,13 +295,15 @@ Schema
   timeout: optional(duration, default="5m")
 ```
 
-If `org` is not set it will be set to the value of top level key `team`.
+`org` is the CF organisation. Defaults to the value of the top level key `team`.
 
-`vars` is a hash map of environment variables that will be available to the `app` in CF
+`vars` is a hash map of environment variables that will be available to the `app` in CF.
 
 `test_domain` sets the domain that should be used when pushing the app as a candidate. By default this is derived for you based on the API you use.
 
-`deploy_artifact` the path to a file or directory to push to CF, which has been saved in a previous `run` or `docker-compose` task with `save_artifacts`.
+`deploy_artifact` the path to a file or directory to push to CF, which has been saved in a previous `run` or `docker-compose` task with `save_artifacts`. The path must be relative to the `.halfpipe.io` file.
+
+`manifest` defaults to `manifest.yml`, relative to the `.halfpipe.io` file. To use an artifact from a previous task you must use the path `../artifacts/<saved-artifact-path>`.
 
 `pre_promote` is a list of run tasks, that will be executed after the app has been deployed as a candidate but before the app gets promoted to live. The pre promote jobs will get the environment variable `TEST_ROUTE` injected with the route to the candidate app.
 
@@ -309,7 +311,7 @@ If `org` is not set it will be set to the value of top level key `team`.
 
 `timeout` sets the timeout for the halfpipe deployment. If a command does not finish within this timeframe the task will fail.
 
-In your team's vault you will find the map `cloudfoundry` containing the values: `username`, `password`, `api-dev`, `api-live`, `api-gcp`, `api-snpaas`.
+In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments.
 
 Examples
 ```yaml
