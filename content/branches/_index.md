@@ -41,7 +41,7 @@ When you execute `halfpipe upload` there will be two questions to help confirm y
 
     This is to help guard against accidentally creating branch pipelines that would clash with deployments of the master branch.
 
-2. What will be the name of the branch pipeline in concourse?
+2. What will be the name of the pipeline in concourse?
 
     This is to make sure you've read the docs!
 
