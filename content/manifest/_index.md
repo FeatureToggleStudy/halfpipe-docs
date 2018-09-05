@@ -176,6 +176,7 @@ Schema
   save_artifacts: optional(list(string))
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
+  retries: optional(int, default=0)
 ```
 
 `script` is a path to a shell script to be executed relative to `.halfpipe.io` file. Alternatively if you want to run a system command prefix the command with `\`, i.e `\make`
@@ -193,6 +194,8 @@ Schema
 `restore_artifacts` restores all previously saved artifacts into the working dir of the job. I.e if you have saved `build/my/thing` and `some/other/path` in a run/docker-compose task, and you set `restore_artifacts: true` in a subsequent task the files `build/my/thing` and `some/other/path` will be present.
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
+
+`retries` the number of times the task will be retried if it fails.
 
 Examples
 ```yaml
@@ -243,7 +246,7 @@ Schema
   save_artifacts: optional(list(string))
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
-
+  retries: optional(int, default=0)
 ```
 
 `service` the name of the docker-compose.yml service to run.
@@ -257,6 +260,8 @@ Schema
 `restore_artifacts` see the `run` task for description.
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
+
+`retries` the number of times the task will be retried if it fails.
 
 Examples
 ```yaml
@@ -293,6 +298,7 @@ Schema
   pre_promote: optional(list(run-task))
   parallel: optional(bool, default=false)
   timeout: optional(duration, default="5m")
+  retries: optional(int, default=1)
 ```
 
 `org` is the CF organisation. Defaults to the value of the top level key `team`.
@@ -310,6 +316,8 @@ Schema
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `timeout` sets the timeout for the halfpipe deployment. If a command does not finish within this timeframe the task will fail.
+
+`retries` the number of times the task will be retried if it fails.
 
 In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments.
 
@@ -354,11 +362,15 @@ Schema
   image: required(string)
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
+  retries: optional(int, default=0)
 ```
 
 `restore_artifacts` see the `run` task for description.
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
+
+`retries` the number of times the task will be retried if it fails.
+
 
 Example using the [Halfpipe Private Registry](/docker-registry/) - username and password are not required.
 
@@ -394,6 +406,7 @@ Schema
   docker_compose_service: optional(string, default="code")
   vars: optional(hashmap(string, string))
   parallel: optional(bool, default=false)
+  retries: optional(int, default=0)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -411,6 +424,8 @@ Schema
 `vars` is a hashmap of environment variables that will be available to the docker-compose service used for the task
 
 `parallel` run the task in parallel with other tasks. See [Running tasks in parallel](#parallel-tasks).
+
+`retries` the number of times the task will be retried if it fails.
 
 Examples
 
@@ -454,6 +469,7 @@ Schema
   targets: required(list(string))
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
+  retries: optional(int, default=0)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -469,6 +485,8 @@ Schema
 `parallel` run the task in parallel with other tasks.
 
 `manual_trigger` require manual triggering of task in Concourse.
+
+`retries` the number of times the task will be retried if it fails.
 
 Minimal example
 
@@ -512,6 +530,7 @@ Schema
   targets: required(list(string))
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
+  retries: optional(int, default=0)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -527,6 +546,8 @@ Schema
 `parallel` run the task in parallel with other tasks.
 
 `manual_trigger` require manual triggering of task in Concourse.
+
+`retries` the number of times the task will be retried if it fails.
 
 Minimal example
 
