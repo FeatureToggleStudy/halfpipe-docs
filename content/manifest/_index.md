@@ -520,6 +520,8 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
 
 This task deploys a version of the shared [ml modules library](https://github.com/springernature/ml) from [artifactory](https://springernature.jfrog.io/springernature/simple/libs-release-local/com/springer/ml-modules/)
 
+Modules **must** be published on the [hosted Artifactory](http://docs.springernature.app/operations/artefact-management/) and not the internal one!
+
 Schema
 ```yaml
 - type: deploy-ml-modules
