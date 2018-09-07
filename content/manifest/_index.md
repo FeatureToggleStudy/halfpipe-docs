@@ -17,7 +17,6 @@ Schema
 team: required(string)
 pipeline: required(string)
 slack_channel: optional(string regex '#.+')
-on_failure: optional(list)
 trigger_interval: optional(string regex '\d+h')
 repo: optional(repo)
 tasks: required(list)
@@ -53,25 +52,6 @@ slack_channel: optional(string regex '#.+')
 Example
 ```yaml
 slack_channel: "#ci-alerts"
-```
-
-## on_failure
-The optional field `on_failure` can be set to run a task when any of the tasks fail. We support running a run task or a docker-compose task.
-Both `slack_channel` and `on_failure` can be set.
-
-See [tasks](#tasks) for the schema of a run-task or docker-compose task.
-
-Schema
-```yaml
-on_failure: optional(list)
-```
-
-Example
-```yaml
-on_failure:
-- type: run
-  name: run tests
-  ...                # task specific options
 ```
 
 ## trigger_interval
