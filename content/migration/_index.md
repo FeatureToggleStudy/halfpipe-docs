@@ -83,7 +83,7 @@ environment-groups:
 
 To migrate them the easiest way to do so is to simply `cf env APP-DEPLOYED-BY-AUTO-PIPELINES` to read the secrets and then manually add them to Vault. More info on how Vault works can be found [here](/vault/)
 
-### Cloud Foundry routes.
+### Cloud Foundry manifest.
 
 In Auto Pipeline you were required to add the routes you wanted to be bound to your app in `app-anatomy.yml`. Note that the `needs-to-be-publicly-accessible` would generate a public route at deploy time for you.
 
@@ -107,6 +107,10 @@ applications:
     - route: another-random-route.domain.com
     - route: the-publicly-availible-route-automatically-generated-by-auto-pipelines.domain.com
 ```
+
+Similarly the services you want to be bound to your app needs to go in the cf manifest.
+
+During a migration from Auto Pipelines to Halfpipe its safest to copy the old cf manifest and make changes to that rather than make any changes to a manifest that is used by both Auto Pipelines and Halfpipe. If you add routes to the manifest Auto Pipelines *will* fail.
 
 ### Cloud Foundry environment variables
 
