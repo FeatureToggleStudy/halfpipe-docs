@@ -281,6 +281,8 @@ Schema
   retries: optional(int, default=1)
 ```
 
+`api` is the CF api endpoint to target. See [default values in vault](/cf-deployment/#default-values-in-vault) for how this affects default values for `username`, `password` and `org`.
+
 `org` is the CF organisation. Defaults to the value of the top level key `team`.
 
 `vars` is a hash map of environment variables that will be available to the `app` in CF.
