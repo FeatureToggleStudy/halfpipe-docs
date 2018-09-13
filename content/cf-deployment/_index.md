@@ -87,3 +87,28 @@ $ cf halfpipe-cleanup -manifestPath manifest-dev.yml
 #	* cf delete appName-DELETE -f
 ...
 ```
+
+## Default Values in Vault
+
+The [deploy-cf task](/manifest/#deploy-cf) has parameters for `api` (the environment's api url for dev, live or SNPaaS), `username`, `password`, `org` and `space`.
+
+Of these parameters, only `api` and `space` are required. The others will be defaulted to values provided in your team's Vault:
+
+`vault read springernature/<team-name>/cloudfoundry`
+
+### Standard defaults
+```
+username: ((cloudfoundry.username))
+password: ((cloudfoundry.password))
+org: <team-name>
+```
+
+### SNPaaS defaults
+
+When api is set to `((cloudfoundry.api-snpaas))` different default values are used:
+
+```
+username: ((cloudfoundry.username-snpaas))
+password: ((cloudfoundry.password-snpaas))
+org: ((cloudfoundry.org-snpaas))
+```

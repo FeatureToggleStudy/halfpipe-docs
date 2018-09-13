@@ -257,7 +257,7 @@ Examples
 ```
 
 ### deploy-cf
-deploy-cf is surprise, surprise used to deployed an app to Cloud Foundry.
+deploy-cf is used to deploy an app to Cloud Foundry with zero downtime.
 
 [Here you can find more information](/cf-deployment/) about how deploy-cf works under the hood!
 
@@ -299,7 +299,7 @@ Schema
 
 `retries` the number of times the task will be retried if it fails.
 
-In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments.
+In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments. See [default values in vault](/cf-deployment/#default-values-in-vault) for more information about how optional parameters are set to default values.
 
 Examples
 ```yaml
