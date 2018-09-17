@@ -13,10 +13,10 @@ Halfpipe provides a cache directory for every task: `/halfpipe-cache`. This dire
 
 Your build tool should be configured to use this directory, normally this is done by setting an environment variable.
 
-For example, to set `GRADLE_HOME` if the halfpipe cache dir exists:
+For example, to set `GRADLE_USER_HOME` if the halfpipe cache dir exists:
 
 ```bash
-[ -d /halfpipe-cache ] && export GRADLE_HOME="/halfpipe-cache/.gradle"
+[ -d /halfpipe-cache ] && export GRADLE_USER_HOME="/halfpipe-cache/.gradle"
 
 ./gradlew build
 ```
