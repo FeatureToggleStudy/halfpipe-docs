@@ -16,7 +16,7 @@ Your build tool should be configured to use this directory, normally this is don
 For example, to set `GRADLE_HOME` if the halfpipe cache dir exists:
 
 ```bash
-[ -d /halfpipe-cache ] && GRADLE_HOME="/halfpipe-cache/.gradle"
+[ -d /halfpipe-cache ] && export GRADLE_HOME="/halfpipe-cache/.gradle"
 
 ./gradlew build
 ```
