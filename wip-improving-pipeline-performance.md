@@ -13,7 +13,7 @@ Your build tool should be configured to use this directory, normally this is don
 For example, to set `GRADLE_HOME` if the halfpipe cache dir exists:
 
 ```bash
-[ -d /halfpipe-cache ] && GRADLE_HOME="/halfpipe-cache/.gradle"`
+[ -d /halfpipe-cache ] && GRADLE_HOME="/halfpipe-cache/.gradle"
 
 ./gradlew build
 ```
@@ -21,12 +21,12 @@ For example, to set `GRADLE_HOME` if the halfpipe cache dir exists:
 
 #### 3. Avoid Docker Compose tasks where possible
 
-There is currently a limitation in Halfpipe that means docker images used for `docker-compose` tasks are not cached. We hope to fix this, but for now consider using a `run` when the task only requires starting one container.
+There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) when the task only requires starting one container.
 
 
 #### 4. Use the task cache directory with Docker Compose
 
-If you are using the `docker-compose` task, you can still use the task cache directory by adding it as a volume in the `docker-compose.yml` config.
+If you are using the [`docker-compose`](/manifest#docker-compose) task, you can still use the task cache directory by adding it as a volume in the `docker-compose.yml` config.
 
 ```yaml
 version: '3'
@@ -38,6 +38,7 @@ services:
     - .:/app
     - /halfpipe-cache
     working_dir: /app
+    command: ./build
 ```
 
 #### 5. Run tasks in parallel
