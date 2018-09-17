@@ -6,6 +6,10 @@ h1 {
     text-transform: none;
 }
 
+#body-inner > h3 {
+    margin: 4rem 0 1rem 0 !important;
+}
+
 #body .padding {
     padding: 1rem 3rem;
 }

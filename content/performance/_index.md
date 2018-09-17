@@ -1,10 +1,13 @@
-# Improving Pipeline Performance
+---
+title: Improving Performance
+weight: 120
+---
 
-#### 1. Do less
+### Do less
 
 Does your build stage have to download gradle/sbt/the whole internet every time it runs? Consider using a custom docker image, pre-baked with the dependencies needed. This is better for performance than caching as you will never get a cache miss.
 
-#### 2. Cache more
+### Cache more
 
 Halfpipe provides a cache directory for every task: `/halfpipe-cache`. This directory is unique to the task and Concourse worker the task is running on.
 
@@ -19,12 +22,12 @@ For example, to set `GRADLE_HOME` if the halfpipe cache dir exists:
 ```
 
 
-#### 3. Avoid Docker Compose tasks where possible
+### Avoid Docker Compose tasks if possible
 
-There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) when the task only requires starting one container.
+There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container.
 
 
-#### 4. Use the task cache directory with Docker Compose
+### Use the task cache directory with Docker Compose
 
 If you are using the [`docker-compose`](/manifest#docker-compose) task, you can still use the task cache directory by adding it as a volume in the `docker-compose.yml` config.
 
@@ -41,7 +44,7 @@ services:
     command: ./build
 ```
 
-#### 5. Run tasks in parallel
+### Run tasks in parallel
 
 Use the [`parallel`](/manifest/#parallel-tasks) option. 
 
