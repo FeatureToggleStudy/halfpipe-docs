@@ -13,14 +13,27 @@ Halfpipe provides a cache directory for every task: `/halfpipe-cache`. This dire
 
 Your build tool should be configured to use this directory, normally this is done by setting an environment variable.
 
-For example, to set `GRADLE_USER_HOME` if the halfpipe cache dir exists:
-
 ```bash
+# gradle example
+
 [ -d /halfpipe-cache ] && export GRADLE_USER_HOME="/halfpipe-cache/.gradle"
 
 ./gradlew build
 ```
 
+```bash
+# sbt example (using https://github.com/paulp/sbt-extras)
+
+if [ -d /halfpipe-cache ]; then
+    # $HOME/.sbt is hardcoded in sbt wrapper so symlink it
+    mkdir -p /halfpipe-cache/.sbt
+    rm -rf ~/.sbt
+    ln -s /halfpipe-cache/.sbt ~
+    SBT_OPTIONS="-ivy /halfpipe-cache/.ivy2"
+fi
+
+./sbt ${SBT_OPTIONS} test package zip
+```
 
 ### Avoid Docker Compose tasks if possible
 
