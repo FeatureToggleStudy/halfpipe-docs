@@ -62,3 +62,12 @@ services:
 Use the [`parallel`](/manifest/#parallel-tasks) option. 
 
 Use the [`pre_promote`](/manifest#deploy-cf) stage of [`deploy-cf`](/manifest#deploy-cf) to run smoke-tests and CDCs. These are automatically run in parallel.
+
+
+### Vendor dependencies
+
+The build stage of a pipeline normally requires resolving dependencies, so it's a good idea to keep them around for deployment rather than have the Cloud Foundry buildpack download them all over again. It also provides more guarantees that if the build worked so will the deploy. No chance of external dependencies going missing, or changing, or network errors etc.
+
+For example halfpipe pipelines, see the [Go example](https://github.com/springernature/halfpipe-examples/tree/master/golang) and the [Node.js example](https://github.com/springernature/halfpipe-examples/tree/master/nodejs).
+
+Also see the Cloud Foundry buildpack documentation. e.g. [Ruby](https://docs.cloudfoundry.org/buildpacks/ruby/index.html#vendoring), [Node.js](https://docs.cloudfoundry.org/buildpacks/node/index.html#vendoring).
