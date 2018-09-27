@@ -42,7 +42,7 @@ token_policies: [default engineering-enablement]
 
 ### Authenticate via the Web UI
 
-Just click the `Vault` link at the top and authenticate with your GitHub token.
+[https://vault.halfpipe.io/ui/vault/auth?with=github](https://vault.halfpipe.io/ui/vault/auth?with=github)
 
 ## Pre populated secrets in Vault.
 
@@ -51,6 +51,12 @@ Since we are so nice, we have pre populated some secrets in vault for your pleas
 ### /springernature/YOUR-TEAM/cloudfoundry
 
 The `cloudfoundry` secret contains `username`, `password`, `api-dev`, `api-live`, `api-gcp`. `api-snpaas`. These secrets go very nicely together with the `deploy-cf` task.
+
+### /springernature/YOUR-TEAM/concourse
+The `concourse` secret contains `username`, `password`, `team` and `host`. These secrets can be used to login to Concourse with basic auth.
+
+### /springernature/YOUR-TEAM/artifactory
+The `artifactory` secret contains `username`, `password` and `host`. These secrets can be used to publish artifacts to our Artifactory instance.
 
 ### /springernature/YOUR-TEAM/github
 
