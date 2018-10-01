@@ -92,3 +92,17 @@ token_duration         768h
 ```
 
 If you have not run a `vault token renew` within that 768h duration your token will expire. To solve simply [`login`](/vault/#Login). again.
+
+
+### How can I order my pipelines?
+
+You can use the web interface to drag pipelines around. The order is saved.
+
+Or use the fly CLI: `fly -t <team> order-pipelines -h`
+
+To order all pipelines alphabetically:
+
+```bash
+export TEAM=myteam
+fly -t $TEAM op $(fly -t $TEAM pipelines | cut -d' ' -f1 | sort | xargs -IP printf " -p P")
+```
