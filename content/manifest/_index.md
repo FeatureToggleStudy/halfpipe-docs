@@ -135,6 +135,15 @@ To use this feature
 * Save the key in vault under a path and make sure it looks similar to the key under `/springernature/YOUR-TEAM/gcr`.
 * Make sure you grant the service account `Storage Legacy Bucket Owner` permission on the bucket.
 
+Examples
+```yaml
+# Override the artifact configuration
+artifact_config:
+  bucket: ((artifactConfig.bucket))
+  private_key: ((artifactConfig.json_key))
+```
+
+
 ## Tasks
 The top level dict `tasks` dictates what halfpipe should do.
 
