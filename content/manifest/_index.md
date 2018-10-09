@@ -19,7 +19,7 @@ pipeline: required(string)
 slack_channel: optional(string regex '#.+')
 trigger_interval: optional(string regex '\d+h')
 repo: optional(repo)
-artifact_config: option(artifact_config)
+artifact_config: optional(artifact_config)
 tasks: required(list)
 ```
 
