@@ -19,6 +19,7 @@ pipeline: required(string)
 slack_channel: optional(string regex '#.+')
 trigger_interval: optional(string regex '\d+h')
 repo: optional(repo)
+artifact_config: option(artifact_config)
 tasks: required(list)
 ```
 
@@ -109,6 +110,30 @@ repo:
   watched_paths:
   - src/main
 ```
+
+## artifact_config
+By default all artifacts saved and retrieved will be placed in a shared Google bucket.
+
+The optional top level dict `artifact_config` dictates what bucket will be used when storing and retrieving artifacts. This is useful if your project have strict security requirements.
+
+Schema
+```yaml
+artifact_config:
+  bucket: required(string)
+  json_key: required(string)
+```
+
+`bucket` controls the bucket in Google cloud that will be used for storing artifacts.
+
+`json_key` is the JSON key for a service account that have read/write rights to the bucket.
+
+To use this feature
+
+* Create your bucket.
+* Create a service account.
+* Create a JSON key for the service account.
+* Save the key in vault under a path and make sure it looks similar to the key under `/springernature/YOUR-TEAM/gcr`.
+* Make sure you grant the service account `Storage Legacy Bucket Owner` permission on the bucket.
 
 ## Tasks
 The top level dict `tasks` dictates what halfpipe should do.
