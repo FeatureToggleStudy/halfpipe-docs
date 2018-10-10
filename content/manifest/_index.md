@@ -20,6 +20,7 @@ slack_channel: optional(string regex '#.+')
 trigger_interval: optional(string regex '\d+h')
 repo: optional(repo)
 artifact_config: optional(artifact_config)
+feature_toggles: optional(list(string))
 tasks: required(list)
 ```
 
@@ -159,6 +160,8 @@ artifact_config:
   private_key: ((artifactConfig.json_key))
 ```
 
+## feature_toggles
+This list of strings turns on experimental features.
 
 ## Tasks
 The top level dict `tasks` dictates what halfpipe should do.
