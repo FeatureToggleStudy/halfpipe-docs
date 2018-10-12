@@ -74,6 +74,7 @@ trigger_interval: 24h
 ## cron_trigger
 The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
 [Online Cron Tester](https://crontab.guru/)
+[Online Cron Tester](https://crontab.guru/)
 
 Schema
 ```yaml
@@ -386,6 +387,7 @@ Examples
 ### docker-push
 Allows you to build a Docker image and push it to a docker registry, currently
 the `Dockerfile` is __required__ to reside in the same directory as the halfpipe manifest.
+The docker image will be tagged with the `latest` tag by default.
 
 Schema
 ```yaml
@@ -423,6 +425,11 @@ Example using official Docker Registry
   image: myusername/your-image-name
 ```
 
+To enabled automated version tags for the docker image, following feature toggle can be enabled (experimental)
+```yaml
+feature_toggles:
+- versioned
+```
 
 ### consumer-integration-test
 
