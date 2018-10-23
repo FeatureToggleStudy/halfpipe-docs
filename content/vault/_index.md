@@ -78,13 +78,14 @@ What this means in practice is that you will have rights to read, write, create 
 In my example I have access to engineering-enablement
 
 ```
-$ vault write /springernature/engineering-enablement/ee-rocks for=sure
+$ vault write /springernature/engineering-enablement/ee-rocks for=sure another=key
 Success! Data written to: springernature/engineering-enablement/ee-rocks
 $ vault read /springernature/engineering-enablement/ee-rocks
 Key             	Value
 ---             	-----
 refresh_interval	768h0m0s
 for             	sure
+another           key
 
 # But no access to another team
 $ vault write /springernature/oscar/oscar-rocks for=sure
@@ -95,6 +96,9 @@ Code: 403. Errors:
 
 * permission denied
 ```
+
+Note: If you want to write several keys into the vault, you need to it all in one operation.
+`vault write` overrides all the keys that existed before.
 
 ## How it works in concourse.
 
