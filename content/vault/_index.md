@@ -85,7 +85,7 @@ Key             	Value
 ---             	-----
 refresh_interval	768h0m0s
 for             	sure
-another           key
+another                 key
 
 # But no access to another team
 $ vault write /springernature/oscar/oscar-rocks for=sure
