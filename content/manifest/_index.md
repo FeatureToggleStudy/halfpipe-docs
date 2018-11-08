@@ -208,6 +208,7 @@ Schema
     password: optional(string)
   vars: optional(hashmap(string, string))
   save_artifacts: optional(list(string))
+  save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
@@ -224,6 +225,8 @@ Schema
 `vars` is a hashmap of environment variables that will be available to the `script`
 
 `save_artifacts` is a list of paths to directories or files that you want to make available to future tasks. For example, an artifact created by a build task which you want to deploy. Use `.` to save the entire working directory (e.g. for node.js or ruby apps). See `deploy_artifact` in the `deploy-cf` task for using a saved artifact.
+
+`save_artifacts_on_failure` is a list of paths to directories or files that you want to save if the provided script fails. This is useful for test reports and such.
 
 `restore_artifacts` restores all previously saved artifacts into the working dir of the job. I.e if you have saved `build/my/thing` and `some/other/path` in a run/docker-compose task, and you set `restore_artifacts: true` in a subsequent task the files `build/my/thing` and `some/other/path` will be present.
 
@@ -252,6 +255,8 @@ Examples
     TEST_API: https://test-api.com
   save_artifacts:
   - target/distribution/artifact.zip
+  save_artifacts_on_failure:
+  - testReports
 - type: run
   script: build.sh
   docker:
@@ -278,6 +283,7 @@ Schema
   manual_trigger: optional(bool, default=false)
   vars: optional(hashmap(string, string))
   save_artifacts: optional(list(string))
+  save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
@@ -292,6 +298,8 @@ Schema
 `save_artifacts` see the `run` task for description.
 
 `restore_artifacts` see the `run` task for description.
+
+`save_artifacts_on_failure` see the `run` task for description.
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
