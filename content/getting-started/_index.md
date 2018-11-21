@@ -30,7 +30,7 @@ If you updated your path make sure to restart any instance of CMD.
 
 ## GitHub
 
-To be able to do anything in Halfpipe your user **must** be part of a team in GitHub. These teams are consitent with current CloudFoundry orgs, as they are also used to push your code in the correct org. Important to get this right!
+To be able to do anything in Halfpipe your user **must** be part of a team in GitHub. These teams are consitent with current CloudFoundry orgs, as they are also used to push your code in the correct org. Important to get this right! Furthermore your user in Github **must** have a verified primary email otherwise you will not be able to login to Concourse!
 
 [Check if you are part of a specific team](https://github.com/orgs/springernature/teams)
 
