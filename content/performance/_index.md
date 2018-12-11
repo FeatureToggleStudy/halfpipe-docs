@@ -7,7 +7,7 @@ weight: 120
 
 Does your build stage have to download gradle/sbt/the whole internet every time it runs? Consider using a custom docker image, pre-baked with the dependencies needed. This is better for performance than caching as you will never get a cache miss.
 
-### Cache more
+### Worker Cache
 
 Halfpipe provides a cache directory for every task: `/halfpipe-cache`. This directory is unique to the task and Concourse worker the task is running on.
 
@@ -35,14 +35,17 @@ fi
 ./sbt ${SBT_OPTIONS} test package zip
 ```
 
-### Avoid Docker Compose tasks if possible
+### Docker Compose
 
 There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container.
 
+### Docker Compose Cache
 
-### Use the task cache directory with Docker Compose
+If you are using the [`docker-compose`](/manifest#docker-compose) task, you can use a cache, similar to the worker cache, except that this cache is shared between all workers and scoped per team.
 
-If you are using the [`docker-compose`](/manifest#docker-compose) task, you can still use the task cache directory by adding it as a volume in the `docker-compose.yml` config.
+The cache dir is: `/halfpipe-shared-cache` available to mount as a volume in the docker compose file.
+
+Right now this is the most performant cache solutions for build artifacts, because the cache is persistent also over worker restarts.
 
 ```yaml
 version: '3'
@@ -52,7 +55,7 @@ services:
     image: my-image:latest
     volumes:
     - .:/app
-    - /halfpipe-cache
+    - /halfpipe-shared-cache:/halfpipe-shared-cache
     working_dir: /app
     command: ./build
 ```
