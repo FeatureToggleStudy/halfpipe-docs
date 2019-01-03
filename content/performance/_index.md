@@ -9,14 +9,14 @@ Does your build stage have to download gradle/sbt/the whole internet every time 
 
 ### Worker Cache
 
-Halfpipe provides a cache directory for every task: `/halfpipe-cache`. This directory is unique to the task and Concourse worker the task is running on.
+Halfpipe provides a cache directory for every task: `/var/halfpipe/cache`. This directory is unique to the task and Concourse worker the task is running on.
 
 Your build tool should be configured to use this directory, normally this is done by setting an environment variable.
 
 ```bash
 # gradle example
 
-[ -d /halfpipe-cache ] && export GRADLE_USER_HOME="/halfpipe-cache/.gradle"
+[ -d /var/halfpipe/cache ] && export GRADLE_USER_HOME="/var/halfpipe/cache/.gradle"
 
 ./gradlew build
 ```
@@ -24,12 +24,12 @@ Your build tool should be configured to use this directory, normally this is don
 ```bash
 # sbt example (using https://github.com/paulp/sbt-extras)
 
-if [ -d /halfpipe-cache ]; then
+if [ -d /var/halfpipe/cache ]; then
     # $HOME/.sbt is hardcoded in sbt wrapper so symlink it
-    mkdir -p /halfpipe-cache/.sbt
+    mkdir -p /var/halfpipe/cache/.sbt
     rm -rf ~/.sbt
-    ln -s /halfpipe-cache/.sbt ~
-    SBT_OPTIONS="-ivy /halfpipe-cache/.ivy2"
+    ln -s /var/halfpipe/cache/.sbt ~
+    SBT_OPTIONS="-ivy /var/halfpipe/cache/.ivy2"
 fi
 
 ./sbt ${SBT_OPTIONS} test package zip
