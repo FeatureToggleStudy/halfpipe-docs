@@ -74,7 +74,6 @@ trigger_interval: 24h
 ## cron_trigger
 The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
 [Online Cron Tester](https://crontab.guru/)
-[Online Cron Tester](https://crontab.guru/)
 
 Schema
 ```yaml
