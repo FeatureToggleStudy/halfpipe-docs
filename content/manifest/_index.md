@@ -448,7 +448,7 @@ Example using official Docker Registry
   image: myusername/your-image-name
 ```
 
-To enabled automated version tags for the docker image, following feature toggle can be enabled (experimental)
+To enable automated version tags for the docker image, enable the `versioned` feature toggle (experimental)
 ```yaml
 feature_toggles:
 - versioned
