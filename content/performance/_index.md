@@ -43,9 +43,9 @@ There is currently a limitation in Halfpipe that means docker images used for [`
 
 If you are using the [`docker-compose`](/manifest#docker-compose) task, you can use a cache, similar to the worker cache, except that this cache is shared between all workers and scoped per team.
 
-The cache dir is: `/var/halfpipe/shared-cache` available to mount as a volume in the docker compose file.
+The cache dir `/var/halfpipe/shared-cache` is available to mount as a volume in the docker compose file.
 
-Right now this is the most performant cache solutions for build artifacts, because the cache is persistent also over worker restarts.
+Right now this is the most performant cache solutions for build artifacts, because the cache is also persistent over worker restarts.
 
 ```yaml
 version: '3'
