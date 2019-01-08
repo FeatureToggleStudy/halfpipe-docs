@@ -9,7 +9,7 @@ Something has gone wrong. How do I roll back a deployment to a previous version?
 
 ## Using Git
 
-The simplest way would simple be to revert the commits you don't want, and push.
+The simplest way is to revert the commits you don't want, and push.
 
 ```bash
 $ git revert BaDsHa
@@ -20,11 +20,11 @@ $ git push
 * History in the git repo
 
 #### Cons
-* Takes time, your entire pipeline must run trough for the deploy to happen
+* Takes time, your entire pipeline must run through for the deploy to happen
 
 ## Using CF
 
-Our deploy plugin makes sure that the last deploy version is kept around in CF.
+Our deploy plugin makes sure that the last deployed version is kept around in CF.
 To rollback the app `myAwesomeApp` simply
 
 ```bash
@@ -41,7 +41,7 @@ $ cf stop myAwesomeApp
 
 ## Using Concourse
 
-Since Concourse have already built and tested a previous version of the App you can use the Web UI to rollback safely.
+Since Concourse has already built and tested a previous version of the App you can use the Web UI to rollback safely.
 
 {{< vimeo 302051341 >}}
 
