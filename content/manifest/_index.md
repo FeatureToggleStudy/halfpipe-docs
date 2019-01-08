@@ -99,6 +99,7 @@ repo:
   watched_paths: optional([]string)
   ignored_paths: optional([]string)
   branch: optional(string)
+  shallow: optional(bool, default=false)
 ```
 
 `uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
@@ -109,7 +110,9 @@ repo:
 
 `git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
 
-`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch
+`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
+
+`shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
 
 Examples
 ```yaml
@@ -121,12 +124,14 @@ repo:
 ```yaml
 # Only trigger the pipeline when there has been changes
 # in the `src/main` folder, and unlock the encrypted repo.
+# Furthermore clone the repo as shallow.
 repo:
   uri: git@github.com:organisation/repo-name.git
   private_key: ((repo-name.private-key))
   git_crypt_key: ((git-crypt-keys.repo-name))
   watched_paths:
   - src/main
+  shallow: true
 ```
 
 ## artifact_config
@@ -212,9 +217,10 @@ Schema
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
-`script` is a path to a shell script to be executed relative to `.halfpipe.io` file. Alternatively if you want to run a system command prefix the command with `\`, i.e `\make`
+`script` is a path to a shell script to be executed relative to `.halfpipe.io` file. Alternatively if you want to run a system command prefix the command with `\`, i.e `\make`.
 
 `docker` is a hashmap that has the following fields:
   `image` is the image that the run script will run inside. If it is a public repo, this is all you need.
@@ -222,7 +228,7 @@ Schema
 
   We provide the Google Container Registry for halfpipe projects. If you are pointing to any docker image on `eu.gcr.io/halfpipe-io/`, username and password are not needed.
 
-`vars` is a hashmap of environment variables that will be available to the `script`
+`vars` is a hashmap of environment variables that will be available to the `script`.
 
 `save_artifacts` is a list of paths to directories or files that you want to make available to future tasks. For example, an artifact created by a build task which you want to deploy. Use `.` to save the entire working directory (e.g. for node.js or ruby apps). See `deploy_artifact` in the `deploy-cf` task for using a saved artifact.
 
@@ -233,6 +239,8 @@ Schema
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Examples
 ```yaml
@@ -287,13 +295,14 @@ Schema
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `service` the name of the docker-compose.yml service to run.
 
 `command` if specified then this command will be run against the service; otherwise the default command for the service will be executed.
 
-`vars` is a hashmap of environment variables that will be available to docker-compose
+`vars` is a hashmap of environment variables that will be available to docker-compose.
 
 `save_artifacts` see the `run` task for description.
 
@@ -304,6 +313,8 @@ Schema
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Examples
 ```yaml
@@ -341,6 +352,7 @@ Schema
   parallel: optional(bool, default=false)
   timeout: optional(duration, default="5m")
   retries: optional(int, default=1)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `api` is the CF api endpoint to target. See [default values in vault](/cf-deployment/#default-values-in-vault) for how this affects default values for `username`, `password` and `org`.
@@ -362,6 +374,8 @@ Schema
 `timeout` sets the timeout for the halfpipe deployment. If a command does not finish within this timeframe the task will fail.
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments. See [default values in vault](/cf-deployment/#default-values-in-vault) for more information about how optional parameters are set to default values.
 
@@ -408,6 +422,7 @@ Schema
   restore_artifacts: optional(bool, default=false)
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `restore_artifacts` see the `run` task for description.
@@ -416,6 +431,7 @@ Schema
 
 `retries` the number of times the task will be retried if it fails.
 
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Example using the [Halfpipe Private Registry](/docker-registry/) - username and password are not required.
 
@@ -457,6 +473,7 @@ Schema
   vars: optional(hashmap(string, string))
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -476,6 +493,8 @@ Schema
 `parallel` run the task in parallel with other tasks. See [Running tasks in parallel](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Examples
 
@@ -520,6 +539,7 @@ Schema
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -537,6 +557,8 @@ Schema
 `manual_trigger` require manual triggering of task in Concourse.
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Minimal example
 
@@ -587,6 +609,7 @@ Schema
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
+  notify_on_success: optional(bool, default=false)
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -604,6 +627,8 @@ Schema
 `manual_trigger` require manual triggering of task in Concourse.
 
 `retries` the number of times the task will be retried if it fails.
+
+`notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 Minimal example
 
