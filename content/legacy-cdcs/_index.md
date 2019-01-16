@@ -63,5 +63,5 @@ If you want to run the consumer's tests after deployment then you must set the p
   provider_host: provider-a.dev.private.springernature.io     # address of provider
   script: ci/run-external-and-cdcs-dev                        # consumer's test script to execute
   docker_compose_service: code                                # OPTIONAL service name in consumer's docker-compose. default = code
-
+  git_clone_options: --depth 100                              # OPTIONAL custom git clone options for cloning the consumer repo
 ```

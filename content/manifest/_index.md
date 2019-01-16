@@ -469,6 +469,7 @@ Schema
   provider_host: optional(string, default=$TEST_ROUTE)
   script: required(string)
   docker_compose_service: optional(string, default="code")
+  git_clone_options: optional(string, default="")
   vars: optional(hashmap(string, string))
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
@@ -486,6 +487,8 @@ Schema
 `script` is the consumer's test script to execute
 
 `docker_compose_service` is the service name in the consumer's docker-compose. Defaults to `code`.
+
+`git_clone_options` custom options for the `git clone` of the consumer repository. e.g. `--depth 100`. For valid options see <https://git-scm.com/docs/git-clone>.
 
 `vars` is a hashmap of environment variables that will be available to the docker-compose service used for the task
 
