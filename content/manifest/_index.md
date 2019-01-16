@@ -287,6 +287,7 @@ Schema
   name: optional(string)
   service: optional(string, default='app')
   command: optional(string)
+  compose_file: optional(string, default='docker-compose.yml')
   manual_trigger: optional(bool, default=false)
   vars: optional(hashmap(string, string))
   save_artifacts: optional(list(string))
@@ -300,6 +301,8 @@ Schema
 `service` the name of the docker-compose.yml service to run.
 
 `command` if specified then this command will be run against the service; otherwise the default command for the service will be executed.
+
+`compose_file` optional path to docker-compose file. defaults to `docker-compose.yml`.
 
 `vars` is a hashmap of environment variables that will be available to docker-compose.
 
