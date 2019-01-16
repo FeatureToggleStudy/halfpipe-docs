@@ -35,34 +35,43 @@ fi
 ./sbt ${SBT_OPTIONS} test package zip
 ```
 
+### Docker Compose Cache
+
+If you are using the [`docker-compose`](/manifest#docker-compose) task, we will mount a cache for you, similar to the worker cache, except that this cache is shared between all workers and scoped per team. No configuration of `docker-compose.yml` is needed to mount the cache into your container.
+
+Right now this is the most performant cache solutions, because it persistent over worker restarts and is shared between all workers.
+
+Your build tool should be configured to use this directory, normally this is done by setting an environment variable.
+
+```bash
+# gradle example
+
+[ -d /var/halfpipe/shared-cache ] && export GRADLE_USER_HOME="/var/halfpipe/shared-cache/.gradle"
+
+./gradlew build
+```
+
+```bash
+# sbt example (using https://github.com/paulp/sbt-extras)
+
+if [ -d /var/halfpipe/shared-cache ]; then
+    # $HOME/.sbt is hardcoded in sbt wrapper so symlink it
+    mkdir -p /var/halfpipe/shared-cache/.sbt
+    rm -rf ~/.sbt
+    ln -s /var/halfpipe/shared-cache/.sbt ~
+    SBT_OPTIONS="-ivy /var/halfpipe/shared-cache/.ivy2"
+fi
+
+./sbt ${SBT_OPTIONS} test package zip
+```
+
 ### Docker Compose
 
 There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container.
 
-### Docker Compose Cache
-
-If you are using the [`docker-compose`](/manifest#docker-compose) task, you can use a cache, similar to the worker cache, except that this cache is shared between all workers and scoped per team.
-
-The cache dir `/var/halfpipe/shared-cache` is available to mount as a volume in the docker compose file.
-
-Right now this is the most performant cache solutions for build artifacts, because the cache is also persistent over worker restarts.
-
-```yaml
-version: '3'
-
-services:
-  app:
-    image: my-image:latest
-    volumes:
-    - .:/app
-    - /var/halfpipe/shared-cache:/var/halfpipe/shared-cache
-    working_dir: /app
-    command: ./build
-```
-
 ### Run tasks in parallel
 
-Use the [`parallel`](/manifest/#parallel-tasks) option. 
+Use the [`parallel`](/manifest/#parallel-tasks) option.
 
 Use the [`pre_promote`](/manifest#deploy-cf) stage of [`deploy-cf`](/manifest#deploy-cf) to run smoke-tests and CDCs. These are automatically run in parallel.
 
