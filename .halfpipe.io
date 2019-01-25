@@ -1,8 +1,8 @@
 {
    "team": "engineering-enablement",
-   "pipeline": "halfpipe-docs-versioned",
+   "pipeline": "halfpipe-docs",
    "feature_toggles": [ 
-      "versioned" 
+      "update-pipeline" 
    ],
    "tasks": [
       {
@@ -17,9 +17,11 @@
          ]
       },
       {
-         "type": "docker-compose",
-         "name": "Hello",
-         "command": "env"
-      },
+         "type": "deploy-cf",
+         "name": "Deploy",
+         "api": "((cloudfoundry.api-snpaas))",
+         "space": "halfpipe",
+         "deploy_artifact": "target/website.zip"
+      }
    ]
 }
