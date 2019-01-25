@@ -7,6 +7,9 @@ weight: 140
 
 This feature inserts an initial job into the pipeline that updates the pipeline configuration based on the halfpipe manifest in the git repository.
 
+With this feature you only need to run `halfpipe upload` once to initially create the pipeline. After that it will update automatically on every commit.
+
+
 ```yaml
 feature_toggles:
 - update-pipeline
