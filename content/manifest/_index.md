@@ -217,6 +217,7 @@ Schema
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `script` is a path to a shell script to be executed relative to `.halfpipe.io` file. Alternatively if you want to run a system command prefix the command with `\`, i.e `\make`.
@@ -240,6 +241,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Examples
 ```yaml
@@ -296,6 +299,7 @@ Schema
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `service` the name of the docker-compose.yml service to run.
@@ -317,6 +321,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Examples
 ```yaml
@@ -352,9 +358,9 @@ Schema
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
   parallel: optional(bool, default=false)
-  timeout: optional(duration, default="5m")
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `api` is the CF api endpoint to target. See [default values in vault](/cf-deployment/#default-values-in-vault) for how this affects default values for `username`, `password` and `org`.
@@ -373,7 +379,7 @@ Schema
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
-`timeout` sets the timeout for the halfpipe deployment. If a command does not finish within this timeframe the task will fail.
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 `retries` the number of times the task will be retried if it fails.
 
@@ -425,6 +431,7 @@ Schema
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `restore_artifacts` see the `run` task for description.
@@ -434,6 +441,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Example using the [Halfpipe Private Registry](/docker-registry/) - username and password are not required.
 
@@ -477,6 +486,7 @@ Schema
   parallel: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -500,6 +510,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Examples
 
@@ -545,6 +557,7 @@ Schema
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -564,6 +577,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Minimal example
 
@@ -615,6 +630,7 @@ Schema
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  timeout: optional(duration, default="1h")
 ```
 
 `name` overrides the default task name shown in the Concourse interface.
@@ -634,6 +650,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
 Minimal example
 
