@@ -56,7 +56,7 @@ The `cloudfoundry` secret contains `username`, `password`, `api-dev`, `api-live`
 The `concourse` secret contains `username`, `password`, `team` and `host`. These secrets can be used to login to Concourse with basic auth.
 
 ### /springernature/YOUR-TEAM/artifactory
-The `artifactory` secret contains `username`, `password` and `host`. These secrets can be used to publish artifacts to our Artifactory instance.
+The `artifactory` secret contains `username`, `password` and `host`. These secrets can be used to publish artifacts to our [Artifactory](/artifactory) instance.
 
 ### /springernature/YOUR-TEAM/github
 
