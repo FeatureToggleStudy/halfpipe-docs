@@ -7,7 +7,7 @@ title: "Halfpipe"
 <div id="home-features">
   <div class="feature-item">
       <div class="feature-item-teaser">
-        <img src="/images/logos/concourse_white.svg" alt="concourse">
+        <a href="/concourse/" class="btn btn--primary"><img src="/images/logos/concourse_white.svg" alt="concourse"></a>
       </div>
     <div class="feature-item-body">
         <h2 class="feature-item-title">CI</h2>
@@ -19,7 +19,7 @@ title: "Halfpipe"
   </div>
   <div class="feature-item">
       <div class="feature-item-teaser">
-        <img src="/images/logos/1506457082-blog-vault-list.svg" alt="vault">
+        <a href="/vault/" class="btn btn--primary"><img src="/images/logos/1506457082-blog-vault-list.svg" alt="vault"></a>
       </div>
     <div class="feature-item-body">
         <h2 class="feature-item-title">Secrets</h2>
@@ -31,7 +31,7 @@ title: "Halfpipe"
   </div>
   <div class="feature-item">
       <div class="feature-item-teaser">
-        <img src="/images/logos/halfpipe-new.svg" alt="halfpipe-cli">
+        <a href="/halfpipe-cli/" class="btn btn--primary"><img src="/images/logos/halfpipe-new.svg" alt="halfpipe-cli"></a>
       </div>
     <div class="feature-item-body">
         <h2 class="feature-item-title">Halfpipe CLI</h2>
@@ -42,4 +42,3 @@ title: "Halfpipe"
     </div>
   </div>
 </div>
-
