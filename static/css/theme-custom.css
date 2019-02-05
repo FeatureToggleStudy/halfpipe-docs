@@ -38,6 +38,10 @@ h1 {
     min-height: 600px;
 }
 
+.feature-item-teaser {
+    min-height: 300px;
+}
+
 .feature-item img {
     width: 100%;
 }
