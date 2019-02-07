@@ -39,3 +39,16 @@ Note that you will **not** be able to login to a team that you are not a member 
 
 ### Web
 Head over to `https://concourse.halfpipe.io/login` filter and click on the team you want to login to, click the "login with GitHub" button. Yay, you are logged in.
+
+
+### Build Badges
+
+Render a badge showing the status of your pipeline:
+
+<a href="https://concourse.halfpipe.io/teams/engineering-enablement/pipelines/halfpipe-docs"><img src="http://badger.halfpipe.io/engineering-enablement/halfpipe-docs" title="badge"></a>
+
+`http://badger.halfpipe.io/<team-name>/<pipeline-name>`
+
+```html
+<a href="https://concourse.halfpipe.io/teams/engineering-enablement/pipelines/halfpipe-docs"><img src="http://badger.halfpipe.io/engineering-enablement/halfpipe-docs" title="badge"></a>
+```
