@@ -39,7 +39,6 @@ Set up environment variables `ARTIFACTORY_USERNAME` and `ARTIFACTORY_PASSWORD`.
 
 ```
 repositories {
-    mavenLocal()
     maven {
         url "https://springernature.jfrog.io/springernature/libs-release/"
         credentials {
