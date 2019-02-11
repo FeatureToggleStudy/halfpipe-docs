@@ -30,3 +30,43 @@ ARTIFACTORY_URL="${ARTIFACTORY_URL:-$(vault read -field=url $VAULT_PATH)}"
 ARTIFACTORY_USERNAME="${ARTIFACTORY_USERNAME:-$(vault read -field=username $VAULT_PATH)}"
 ARTIFACTORY_PASSWORD="${ARTIFACTORY_PASSWORD:-$(vault read -field=password $VAULT_PATH)}"
 ```
+
+## Examples
+
+Set up environment variables `ARTIFACTORY_USERNAME` and `ARTIFACTORY_PASSWORD`. 
+ 
+### Gradle
+
+```
+repositories {
+    maven {
+        url "https://springernature.jfrog.io/springernature/libs-release/"
+        credentials {
+            username "$System.env.ARTIFACTORY_USERNAME"
+            password "$System.env.ARTIFACTORY_PASSWORD"
+        }
+    }
+}
+```
+
+Intellij IDEA is not able to work with repositories with credentials, so use `./gradlew clean build` to build the project and IDEA will reimport project automatically.
+
+### Sbt
+   
+```
+(sys.env.get("ARTIFACTORY_USERNAME"), sys.env.get("ARTIFACTORY_PASSWORD")) match {
+  case (Some(username), Some(password)) =>
+    credentials += Credentials("Artifactory Realm", "springernature.jfrog.io", username, password)
+  case _ =>
+    println("USERNAME and/or PASSWORD is missing")
+    credentials ++= Seq()
+}
+
+resolvers := Seq(
+  Resolver.defaultLocal,
+  Resolver.mavenLocal,
+  MavenRepository("Artifactory Realm", "https://springernature.jfrog.io/springernature/libs-release/"),
+)
+
+externalResolvers := resolvers.value
+```                                                                            
