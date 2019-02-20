@@ -432,6 +432,7 @@ Schema
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
+  vars: optional(hashmap(string, string))
 ```
 
 `restore_artifacts` see the `run` task for description.
@@ -443,6 +444,8 @@ Schema
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
+
+`vars` is a hash map of Docker build-time variables. These will be available as environment variables during the Docker build.
 
 Example using the [Halfpipe Private Registry](/docker-registry/) - username and password are not required.
 
