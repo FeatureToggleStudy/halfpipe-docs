@@ -263,6 +263,7 @@ Examples
     password: very-secret
   vars:
     TEST_API: https://test-api.com
+    MY_SECRET: ((myapp.my-secret-in-vault))
   save_artifacts:
   - target/distribution/artifact.zip
   save_artifacts_on_failure:
@@ -335,6 +336,7 @@ Examples
   name: run tests
   vars:
     TEST_API: https://test-api.com
+    MY_SECRET: ((my-app.my-secret-in-vault))
 ```
 
 ### deploy-cf
