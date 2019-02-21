@@ -405,6 +405,7 @@ Examples
   vars:
     API_ENDPOINT: https://api.com
     SKIP_SSL_CHECK: true
+    APP_SECRET: ((myapp.app_secret_name))
   deploy_artifact: target/distribution/artifact.zip
   pre_promote:
   - type: run
