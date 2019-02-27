@@ -46,7 +46,7 @@ Your build tool should be configured to use this directory, normally this is don
 ```bash
 # gradle example
 
-[ -d /var/halfpipe/shared-cache ] && export GRADLE_USER_HOME="/var/halfpipe/shared-cache/.gradle"
+[ -d /var/halfpipe/shared-cache ] && export GRADLE_USER_HOME="/var/halfpipe/shared-cache/PIPELINE-NAME/.gradle"
 
 ./gradlew build
 ```
@@ -56,9 +56,9 @@ Your build tool should be configured to use this directory, normally this is don
 
 if [ -d /var/halfpipe/shared-cache ]; then
     # $HOME/.sbt is hardcoded in sbt wrapper so symlink it
-    mkdir -p /var/halfpipe/shared-cache/.sbt
+    mkdir -p /var/halfpipe/shared-cache/PIPELINE-NAME/.sbt
     rm -rf ~/.sbt
-    ln -s /var/halfpipe/shared-cache/.sbt ~
+    ln -s /var/halfpipe/shared-cache/PIPELINE-NAME/.sbt ~
     SBT_OPTIONS="-ivy /var/halfpipe/shared-cache/.ivy2"
 fi
 
