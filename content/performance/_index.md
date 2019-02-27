@@ -65,6 +65,15 @@ fi
 ./sbt ${SBT_OPTIONS} test package zip
 ```
 
+### Gradle Remote Build Cache
+
+It is possible to configure Gradle to use Artifactory as a remote build cache.
+
+<https://jfrog.com/blog/speed-up-your-gradle-builds-with-jfrog-artifactory/>
+
+See the Oscar project for inspiration: <https://github.com/springernature/oscar/blob/master/settings.gradle#L57> 
+
+
 ### Docker Compose
 
 There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container.
