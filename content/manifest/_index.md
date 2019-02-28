@@ -418,14 +418,15 @@ Examples
 ```
 
 ### docker-push
-Allows you to build a Docker image and push it to a docker registry, currently
-the `Dockerfile` is __required__ to reside in the same directory as the halfpipe manifest.
+Allows you to build a Docker image and push it to a docker registry
 The docker image will be tagged with the `latest` tag by default.
 
 Schema
 ```yaml
 - type: docker-push
   name: optional(string)
+  dockerfile_path: optional(string, default="Dockerfile")
+  build_path: optional(string, default=working directory)
   manual_trigger: optional(bool, default=false)
   username: optional(string)
   password: optional(string)
@@ -437,6 +438,9 @@ Schema
   timeout: optional(duration, default="1h")
   vars: optional(hashmap(string, string))
 ```
+`dockerfile_path` path to Dockerfile, relative to the .halfpipe.io file.
+
+`build_path` path to folder to build docker iamge in, relative to .halfpipe.io file.
 
 `restore_artifacts` see the `run` task for description.
 
@@ -465,6 +469,18 @@ Example using official Docker Registry
   password: ((my.password))
   image: myusername/your-image-name
 ```
+
+Example using relative paths for build dir and Dockerfile
+```yaml
+- type: docker-push
+  name: push to docker hub
+  build_path: buildFolder
+  dockerfile_path: ../ops/dockerfiles/Dockerfile
+  username: myusername
+  password: ((my.password))
+  image: myusername/your-image-name
+```
+
 
 To enable automated version tags for the docker image, enable the `versioned` feature toggle (experimental)
 ```yaml
