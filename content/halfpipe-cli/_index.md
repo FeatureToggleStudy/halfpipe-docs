@@ -15,23 +15,19 @@ install ~/Downloads/halfpipe /usr/local/bin
 
 ## Usage
 
-Simply execute `halfpipe` in the root of your project. If there is a `.halfpipe.io` file and the linters pass it will spit out a Concourse pipeline definition for you!
-
-```
-$ cd /Projects/my-project
-$ halfpipe > pipeline.yml
-```
-
-And there you have it, a Concourse pipeline \o/
-
-To upload it make sure you have logged in with fly then simply.
-
-```
-fly -t your-target set-pipeline -p name-of-your-pipeline -c pipeline.yml
-```
-
-You can generate and upload the pipeline without saving the intermeditate pipeline YAML file by using the command:
+To generate the pipeline and upload to Concourse run this command from the root of your project (the same directory where your halfpipe manifest is):
 
 ```
 halfpipe upload
 ```
+
+This is the same as first generating the pipeline and uploading it with fly:
+
+```bash
+halfpipe > pipeline.yml
+fly -t <TARGET_NAME> login -c https://concourse.halfpipe.io -n <TEAM_NAME>
+fly -t <TARGET_NAME> set-pipeline -p name-of-your-pipeline -c pipeline.yml
+```
+`TARGET_NAME` is a label you decide on for this login. Normally it is best to use the same as TEAM_NAME
+
+`TEAM_NAME` is the team in Concourse and GitHub
