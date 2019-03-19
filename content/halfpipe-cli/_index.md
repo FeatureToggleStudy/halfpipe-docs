@@ -21,7 +21,11 @@ To generate the pipeline and upload to Concourse run this command from the root 
 halfpipe upload
 ```
 
-This is the same as first generating the pipeline and uploading it with fly:
+If we could detect any issues with your halfpipe manifest, it will exit with a list of things to fix. Otherwise it will use fly to upload the pipeline to Concourse.
+
+### the long way
+
+`halfpipe upload` is the same as first generating the pipeline to a file and uploading it with fly:
 
 ```bash
 halfpipe > pipeline.yml
