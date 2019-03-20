@@ -367,7 +367,7 @@ Schema
 
 `api` is the CF api endpoint to target. See [default values in vault](/cf-deployment/#default-values-in-vault) for how this affects default values for `username`, `password` and `org`.
 
-`org` is the CF organisation. Defaults to the value of the top level key `team`.
+`org` is the CF organisation. Defaults to the value of the top level key `team` or `((cloudfoundry.org-snpaas))` depending on the CF api set. 
 
 `vars` is a hash map of environment variables that will be available to the `app` in CF.
 
