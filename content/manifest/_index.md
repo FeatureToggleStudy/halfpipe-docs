@@ -17,7 +17,7 @@ Schema
 team: required(string)
 pipeline: required(string)
 slack_channel: optional(string regex '#.+')
-trigger_interval: optional(string regex '\d+h')
+cron_trigger: optional(string cron expression)
 repo: optional(repo)
 artifact_config: optional(artifact_config)
 feature_toggles: optional(list(string))
