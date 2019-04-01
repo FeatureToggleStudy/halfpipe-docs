@@ -7,7 +7,7 @@
    "tasks": [
       {
          "type": "run",
-         "name": "Build",
+         "name": "build",
          "script": "./build",
          "docker": {
             "image": "eu.gcr.io/halfpipe-io/hugo"
@@ -18,7 +18,7 @@
       },
       {
          "type": "deploy-cf",
-         "name": "Deploy",
+         "name": "deploy",
          "api": "((cloudfoundry.api-snpaas))",
          "space": "halfpipe",
          "deploy_artifact": "target/website.zip"
