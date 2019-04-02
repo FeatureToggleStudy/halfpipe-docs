@@ -1,6 +1,6 @@
 applications:
 - name: halfpipe-docs
-  memory: 32M
+  memory: 50M
   instances: 2
   buildpack: https://github.com/cloudfoundry/staticfile-buildpack.git#v1.4.31
   routes:
