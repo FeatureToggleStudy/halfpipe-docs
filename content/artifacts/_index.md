@@ -16,4 +16,4 @@ You can also browse the files at <https://storage.cloud.google.com/halfpipe-io-a
 
 ## Browsing a builds artifact in a web UI.
 
-When a build have uploaded an artifact we have a nifty web UI that allows you to browse the content of the tar <http://gcs-proxy.springernature.app>
+When a build have uploaded an artifact we have a nifty web UI that allows you to browse the content of the tar <https://gcs-proxy.springernature.app>
