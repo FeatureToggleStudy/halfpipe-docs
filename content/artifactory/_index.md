@@ -26,9 +26,12 @@ To use the same script locally and in halfpipe, this script reads the values fro
 
 ```bash
 VAULT_PATH="springernature/<team-name>/artifactory"
-ARTIFACTORY_URL="${ARTIFACTORY_URL:-$(vault read -field=url $VAULT_PATH)}"
-ARTIFACTORY_USERNAME="${ARTIFACTORY_USERNAME:-$(vault read -field=username $VAULT_PATH)}"
-ARTIFACTORY_PASSWORD="${ARTIFACTORY_PASSWORD:-$(vault read -field=password $VAULT_PATH)}"
+export ARTIFACTORY_URL="${ARTIFACTORY_URL:-$(vault read -field=url $VAULT_PATH)}"
+export ARTIFACTORY_USERNAME="${ARTIFACTORY_USERNAME:-$(vault read -field=username $VAULT_PATH)}"
+export ARTIFACTORY_PASSWORD="${ARTIFACTORY_PASSWORD:-$(vault read -field=password $VAULT_PATH)}"
+
+# your build script e.g.
+docker-compose run app ./build
 ```
 
 ## Examples
