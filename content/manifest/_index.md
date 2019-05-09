@@ -574,6 +574,7 @@ Schema
   deploy_zip: required(string)
   app_name: optional(string, default=pipeline name)
   app_version: optional(string, default=$GIT_REVISION)
+  use_build_version: optional(bool, default=false)
   targets: required(list(string))
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
@@ -588,7 +589,9 @@ Schema
 
 `app_name` the app name in MarkLogic. Defaults to the name of the pipeline.
 
-`app_version` the app version in MarkLogic. Defaults to git revision.
+`app_version` the app version in MarkLogic. Defaults to git revision. Cannot be set if `use_build_version` is set to `true`.
+
+`use_build_version` use `$BUILD_VERSION` set by the [update-pipeline feature](/experimental-features/#version) instead of `$GIT_REVISION`. Cannot be set if `app_version` is set.
 
 `targets` a list of MarkLogic instances to deploy to.
 
@@ -647,6 +650,7 @@ Schema
   ml_modules_version: required(string)
   app_name: optional(string, default=pipeline name)
   app_version: optional(string, default=$GIT_REVISION)
+  use_build_version: optional(bool, default=false)
   targets: required(list(string))
   parallel: optional(bool, default=false)
   manual_trigger: optional(bool, default=false)
@@ -661,7 +665,9 @@ Schema
 
 `app_name` the app name in MarkLogic. Defaults to the name of the pipeline.
 
-`app_version` the app version in MarkLogic. Defaults to git revision.
+`app_version` the app version in MarkLogic. Defaults to git revision. Cannot be set if `use_build_version` is set to `true`.
+
+`use_build_version` use `$BUILD_VERSION` set by the [update-pipeline feature](/experimental-features/#version) instead of `$GIT_REVISION`. Cannot be set if `app_version` is set.
 
 `targets` a list of MarkLogic instances to deploy to.
 
