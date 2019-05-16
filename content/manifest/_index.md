@@ -154,7 +154,7 @@ To use this feature
 * Create your bucket.
 * Create a service account.
 * Create a JSON key for the service account.
-* Save the key in vault under a path and make sure it looks similar to the key under `/springernature/YOUR-TEAM/gcr`.
+* Save the key in vault under a path and make sure it looks similar to the key under `/springernature/shared/halfpipe-gcr`.
 * Make sure you grant the service account `Storage Legacy Bucket Owner` permission on the bucket.
 
 Examples
@@ -641,7 +641,7 @@ The task fetches the artifact from the [hosted Artifactory](/artifactory) and *n
 
 [List of available versions](https://springernature.jfrog.io/springernature/simple/libs-release-local/com/springer/ml-modules/)
 
-Basic auth credentials are provided in vault `vault read springernature/<team>/artifactory`.
+Basic auth credentials are provided in vault `vault read springernature/shared/artifactory`.
 
 Schema
 ```yaml

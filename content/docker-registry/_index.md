@@ -11,7 +11,7 @@ Please read about [Vault](https://docs.halfpipe.io/vault) first.
 
 ### Docker login
 ```
-$ vault read -field=private_key /springernature/[YOUR GITHUB TEAM NAME]/gcr | docker login -u _json_key --password-stdin https://eu.gcr.io
+$ vault read -field=private_key /springernature/shared/halfpipe-gcr | docker login -u _json_key --password-stdin https://eu.gcr.io
 ```
 
 ### Docker push

@@ -20,12 +20,12 @@ Sign in to the web interface using GitHub auth `SN GitHub`. You must be a member
 
 Halfpipe injects the environment variables `ARTIFACTORY_USERNAME`, `ARTIFACTORY_PASSWORD` and `ARTIFACTORY_URL` into your build containers.
 
-If you need credentials outside of halfpipe, you can generate an api key in your (or a shared team users) profile page in artifactory. You can also find the credentials that are used by halfpipe in [vault](/vault/#springernature-your-team-artifactory) under `springernature/<team-name>/artifactory`.
+If you need credentials outside of halfpipe, you can generate an api key in your (or a shared team users) profile page in artifactory. You can also find the credentials that are used by halfpipe in [vault](/vault/#springernature-your-team-artifactory) under `springernature/shared/artifactory`.
 
 To use the same script locally and in halfpipe, this script reads the values from vault if they are not already set.
 
 ```bash
-VAULT_PATH="springernature/<team-name>/artifactory"
+VAULT_PATH="springernature/shared/artifactory"
 export ARTIFACTORY_URL="${ARTIFACTORY_URL:-$(vault read -field=url $VAULT_PATH)}"
 export ARTIFACTORY_USERNAME="${ARTIFACTORY_USERNAME:-$(vault read -field=username $VAULT_PATH)}"
 export ARTIFACTORY_PASSWORD="${ARTIFACTORY_PASSWORD:-$(vault read -field=password $VAULT_PATH)}"

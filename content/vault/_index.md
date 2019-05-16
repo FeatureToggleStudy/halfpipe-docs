@@ -55,16 +55,16 @@ The `cloudfoundry` secret contains `username`, `password`, `api-dev`, `api-live`
 ### /springernature/YOUR-TEAM/concourse
 The `concourse` secret contains `username`, `password`, `team` and `host`. These secrets can be used to login to Concourse with basic auth.
 
-### /springernature/YOUR-TEAM/artifactory
+### /springernature/shared/artifactory
 The `artifactory` secret contains `username`, `password` and `host`. These secrets can be used to publish artifacts to our [Artifactory](/artifactory) instance.
 
-### /springernature/YOUR-TEAM/github
+### /springernature/shared/halfpipe-github
 
-The `github` secret contains `private_key`. This is the default private key for git unless you override it so you can clone a git repo without faffing around with deploy keys.
+The `halfpipe-github` secret contains `private_key`. This is the default private key for git unless you override it so you can clone a git repo without faffing around with deploy keys.
 
-### /springernature/YOUR-TEAM/gcr
+### /springernature/shared/halfpipe-gcr
 
-The `gcr` secret contains `private_key`. This can be used to push/pull from our private Docker Registry that is hosted by Google.
+The `halfpipe-gcr` secret contains `private_key`. This can be used to push/pull from our private Docker Registry that is hosted by Google.
 
 ## Read and write secrets
 
@@ -103,7 +103,7 @@ Note: If you want to write several keys into the vault, you need to it all in on
 ## How it works in concourse.
 
 If you have a pipeline `P` in team `T` and that pipeline uses the secret `((secretMap.secretKey))` concourse will try to resolve the value at the paths
-`/springernature/T/P/secretMap` and `/springernature/T/secretMap`. The former path have precedence over the latter.
+`/springernature/T/P/secretMap`, `/springernature/T/secretMap` and `/springernature/shared/secretMap`. The former path have precedence over the latter.
 
 So if you get an error from the halfpipe cli telling you that the secret cannot be found this would be solved by either
 
