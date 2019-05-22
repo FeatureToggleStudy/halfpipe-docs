@@ -214,7 +214,7 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -297,7 +297,7 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -359,7 +359,7 @@ Schema
   vars: optional(hashmap(string, string))
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -432,7 +432,7 @@ Schema
   password: optional(string)
   image: required(string)
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -504,7 +504,7 @@ Schema
   docker_compose_service: optional(string, default="code")
   git_clone_options: optional(string, default="")
   vars: optional(hashmap(string, string))
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -575,7 +575,7 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -628,7 +628,6 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
   - ml.dev.springer-sbm.com
   - ml.qa1.springer-sbm.com
   - ml.write.live.sl.i.springer.com
-  parallel: false               # optional. default false
   manual_trigger: false         # optional. default false
 ```
 
@@ -651,7 +650,7 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(bool, default=false)
+  parallel: optional(string, default=false)
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -670,7 +669,7 @@ Schema
 
 `targets` a list of MarkLogic instances to deploy to.
 
-`parallel` run the task in parallel with other tasks.
+`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `manual_trigger` require manual triggering of task in Concourse.
 
@@ -704,14 +703,13 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
   - ml.dev.springer-sbm.com
   - ml.qa1.springer-sbm.com
   - ml.write.live.sl.i.springer.com
-  parallel: false               # optional. default false
   manual_trigger: false         # optional. default false
 ```
 
 
 ### Parallel Tasks
 
-By default tasks are run in serial top to bottom, with each task only running if the previous task was successful. Two or more adjacent tasks can be configured to run in parallel by setting `parallel: true`.
+By default tasks are run in serial top to bottom, with each task only running if the previous task was successful. Two or more adjacent tasks can be configured to run in parallel by setting `parallel: $(GROUP_NAME)`.
 
 Example
 ```yaml
@@ -721,15 +719,21 @@ tasks:
   ...
 - type: deploy-cf
   name: deploy to dev
-  parallel: true
+  parallel: group1
   ...
 - type: deploy-cf
   name: deploy to QA
-  parallel: true
+  parallel: group1
   ...
 - type: deploy-cf
+  name: deploy live staging
+  parallel: group2
+
+- type: deploy-cf
   name: deploy live
-  ...
+  parallel: group2
+  
+
 ```
 
-This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live.
+This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live-staging and live in parallel.
