@@ -67,7 +67,7 @@ fi
 
 ### Gradle Remote Build Cache
 
-We offer a Gradle Build Cache Node, which can be used to cache various output of a gradle build.
+We offer a Gradle Build Cache Node, which can be used to cache various outputs of a Gradle build.
 
 Web UI: <http://gradle-cache.halfpipe.io>
 
