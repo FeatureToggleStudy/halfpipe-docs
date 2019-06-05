@@ -67,9 +67,26 @@ fi
 
 ### Gradle Remote Build Cache
 
-It is possible to configure Gradle to use Artifactory as a remote build cache.
+We offer a Gradle Build Cache Node, which can be used to cache various output of a gradle build.
 
-<https://jfrog.com/blog/speed-up-your-gradle-builds-with-jfrog-artifactory/>
+Web UI: <http://gradle-cache.halfpipe.io>
+
+Cache URI: <http://gradle-cache.halfpipe.io/cache/>
+
+The Cache Node is running internally, next to our Concourse instance. To enabled the cache just add
+
+```
+buildCache {
+    remote(HttpBuildCache) {
+        url = "http://gradle-cache.halfpipe.io/cache/"
+        push = true
+    }
+}
+```
+
+and run your builds with `--build-cache` or put `org.gradle.caching=true` in your gradle.properties.
+
+Gradle Build Cache Docs: <https://docs.gradle.org/current/userguide/build_cache.html>
 
 See the Oscar project for inspiration: <https://github.com/springernature/oscar/blob/master/settings.gradle#L57> 
 
