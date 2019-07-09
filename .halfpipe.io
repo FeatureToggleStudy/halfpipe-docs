@@ -1,6 +1,7 @@
 {
    "team": "engineering-enablement",
    "pipeline": "halfpipe-docs",
+   "slack_channel": "#halfpipe-team",
    "feature_toggles": [ 
       "update-pipeline" 
    ],
