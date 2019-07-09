@@ -2,6 +2,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+echo fail && exit 1
+
 PACKAGE="target/website.zip"
 
 cd "$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
