@@ -3,7 +3,7 @@
   - adds version number to each job
 	- adds link to view pipeline config
 
-	Works best with pipelines created by halfpipe.
+	Designed for Halfpipe pipelines using "update-pipeline" feature - see https://docs.halfpipe.io/auto-updating-pipelines/
 */
 
 function annotatePlan() {
@@ -22,13 +22,14 @@ function annotatePlan() {
 			return fetch(resourcesUrl)
 				.then(x => x.json())
 				.then(resources => {
-					const versionInput = resources.inputs.filter(x => x.type === 'semver' && x.name === "version");
+					console.log(resources)
+					const versionInput = resources.inputs.filter(x => x.name === "version");
 					if (versionInput.length === 0) {
 						return;
 					}
 
 					const message = versionInput[0].version.number;
-					stageElements[i].innerHTML += `<text x="1" y="6" style="font-size:60%">${message}</text>`;
+					stageElements[i].innerHTML += `<text x="2" y="8" style="font-size:80%">${message}</text>`;
 					stageElements[i].hasAnnotation = true;
 				});
 		});
