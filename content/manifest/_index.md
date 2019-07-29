@@ -215,6 +215,7 @@ Schema
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
   parallel: optional(string, default=false)
+  privileged: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -235,6 +236,8 @@ Schema
 `save_artifacts_on_failure` is a list of paths to directories or files that you want to save if the provided script fails. This is useful for test reports and such.
 
 `restore_artifacts` restores all previously saved artifacts into the working dir of the job. I.e if you have saved `build/my/thing` and `some/other/path` in a run/docker-compose task, and you set `restore_artifacts: true` in a subsequent task the files `build/my/thing` and `some/other/path` will be present.
+
+`privileged` run the task as root. not recommended but sometimes necessary e.g. when using docker-in-docker
 
 `parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
@@ -732,7 +735,7 @@ tasks:
 - type: deploy-cf
   name: deploy live
   parallel: group2
-  
+
 
 ```
 
