@@ -126,11 +126,6 @@ Esnvironment variables set by Auto Pipeline:
 Environment variable set by Halfpipe
 
 * `GIT_REVISION`
+* `BUILD_VERSION` (only if using the [update-pipeline](/auto-updating-pipelines/) feature togggle)
 
 As you can see, Halfpipe sets a lot less. To keep using the old Auto Pipeline env vars you can add them to your Cloud Foundry manifest under `env`, or to the `vars` list of the `deploy-cf` task in halfpipe.
-
-Halfpipe/Concourse does not have the concept of a "build version". If you currently rely on this variable, one option is to switch to using `GIT_REVISION`.
-
-The `deploy-ml-zip` and `deploy-ml-modules` tasks use `GIT_REVSION` for versioning, so projects will now have construct urls like:
-
-`http://[MARKLOGIC-SERVER]:7654/[APP_NAME]/[GIT_REVISION]/path/to/file.xqy`
