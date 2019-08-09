@@ -56,21 +56,6 @@ Example
 slack_channel: "#ci-alerts"
 ```
 
-## trigger_interval (deprecated)
-[Cron Trigger](#cron-trigger) should be used instead.
-
-The optional field `trigger_interval` can be set to run the pipeline on a timer. The interval must be specified in hours:
-
-Schema
-```yaml
-trigger_interval: optional(string regex '\d+h')
-```
-
-Example
-```yaml
-trigger_interval: 24h
-```
-
 ## cron_trigger
 The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
 [Online Cron Tester](https://crontab.guru/)
