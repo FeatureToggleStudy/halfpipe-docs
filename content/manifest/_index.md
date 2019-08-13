@@ -199,7 +199,7 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   privileged: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -285,7 +285,7 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -347,7 +347,7 @@ Schema
   vars: optional(hashmap(string, string))
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -420,7 +420,7 @@ Schema
   password: optional(string)
   image: required(string)
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -492,7 +492,7 @@ Schema
   docker_compose_service: optional(string, default="code")
   git_clone_options: optional(string, default="")
   vars: optional(hashmap(string, string))
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -563,7 +563,7 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -638,7 +638,7 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(string, default=false)
+  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -694,8 +694,43 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
   manual_trigger: false         # optional. default false
 ```
 
+### Parallel
 
-### Parallel Tasks
+This task enables you to run tasks in parallel.
+
+Schema
+```yaml
+- type: parallel
+  tasks: required(list(task))
+```
+
+Example
+```yaml
+tasks:
+- type: run
+  name: build
+  ...
+- type: parallel
+  tasks:
+  - type: deploy-cf
+    name: deploy to dev
+    ...
+  - type: deploy-cf
+    name: deploy to QA
+    ...
+- type: parallel
+  tasks:
+  - type: deploy-cf
+    name: deploy live staging
+    ...
+  - type: deploy-cf
+    name: deploy live
+```
+
+This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live-staging and live in parallel.
+
+
+### Parallel Tasks (DEPRECATED)
 
 By default tasks are run in serial top to bottom, with each task only running if the previous task was successful. Two or more adjacent tasks can be configured to run in parallel by setting `parallel: $(GROUP_NAME)`.
 
