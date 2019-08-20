@@ -31,8 +31,8 @@ The pipelines can do 5 main things:
 
 * Run scripts, like `test.sh`, `ci/build.sh` etc. Your imagination is the limiting factor here.
 * Deploy to Cloud Foundry
-* Build and push Docker images.
-* Run "CDC's"
+* Build and push Docker images
+* Run auto-pipeline CDC tests
 * Deploy MarkLogic modules
 
 A core design philosophy is that there is **no** runtime resolving or configuration!
@@ -66,7 +66,7 @@ The cli does as much up-front validation as it can for all the features in Halfp
 
 ### GitHub Auth
 
-Authentication with Concourse and Vault uses GitHub Oauth.
+Authentication with Concourse and Vault uses GitHub OAuth.
 
 The way things are structured a "team" corresponds to a team in Github, a team in Concourse and a path in Vault.
 

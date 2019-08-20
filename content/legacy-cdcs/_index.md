@@ -5,7 +5,7 @@ weight: 41
 
 To ease migration from the auto-pipeline system, halfpipe has special support for running legacy "CDC" tests.
 
-In the future we hope to provide a proper CDC solution to replace this.
+In the future we hope a proper CDC solution will be developed to replace this.
 
 For a working example of a provider and consumer see <https://github.com/springernature/halfpipe-examples>
 
