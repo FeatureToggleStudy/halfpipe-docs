@@ -12,17 +12,21 @@ The manifest __must__
 * Be valid YAML.
 
 
+You can get started with a new manifest file by running the command `halfpipe init` inside a git repository.
+
+
 Schema
 ```yaml
 team: required(string)
 pipeline: required(string)
 slack_channel: optional(string regex '#.+')
 triggers: optional(list(trigger)
-cron_trigger: optional(string cron expression) #DEPRECATED
-repo: optional(repo) #DEPRECATED
 artifact_config: optional(artifact_config)
 feature_toggles: optional(list(string))
 tasks: required(list)
+
+cron_trigger: optional(string cron expression) #DEPRECATED - use triggers
+repo: optional(repo) #DEPRECATED - use triggers
 ```
 
 The bare minimum example - run a script in a docker container.
@@ -59,13 +63,13 @@ slack_channel: "#ci-alerts"
 
 ## triggers
 
-The top level list `triggers` dictates on what the pipeline should trigger on.
+The top level list `triggers` defines what the pipeline should trigger on.
 
 Schema
 ```yaml
 triggers:
-  - type: required(string)
-    ...      [ task specific options ]
+- type: required(string, git|timer|docker)
+  ...   [ task specific options ]
 ```
 
 `type` must be one of the supported task types: `git`, `timer`, `docker`
@@ -80,7 +84,7 @@ triggers:
 ```
 
 ### git
-The optional trigger `git` dictates which git repo halfpipe will operate on.
+The optional trigger `git` defines which git repo halfpipe will operate on.
 
 Schema
 ```yaml
@@ -130,7 +134,7 @@ triggers:
 
 ### timer
 
-The optional trigger `timer` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
+The optional trigger `timer` can be set to run the pipeline on a timer. The expression must be a valid cron expression:
 [Online Cron Tester](https://crontab.guru/)
 
 
@@ -161,72 +165,6 @@ Example
 ```yaml
 - type: docker
   image: "eu.gcr.io/halfpipe-io/halfpipe-example-docker"
-```
-  
-## cron_trigger (DEPRECATED)
-__THIS FEATURE IS DEPRECATED. PLEASE SEE [timer trigger](#timer)__ 
-
-The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
-[Online Cron Tester](https://crontab.guru/)
-
-Schema
-```yaml
-cron_trigger: optional(string cron expression)
-```
-
-Example
-```yaml
-cron_trigger: "*/10 * * * 1-5"
-```
-
-
-## repo (DEPRECATED)
-__THIS FEATURE IS DEPRECATED. PLEASE SEE [git trigger](#git)__ 
- 
-The optional top level dict `repo` dictates which git repo halfpipe will operate on.
-
-Schema
-```yaml
-repo:
-  uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
-  private_key: optional(string, default="((github.private_key))")
-  git_crypt_key: optional(string)
-  watched_paths: optional([]string)
-  ignored_paths: optional([]string)
-  branch: optional(string)
-  shallow: optional(bool, default=false)
-```
-
-`uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
-
-`private_key` allows you to specify the private key to use when cloning the repo.
-
-`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
-
-`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
-
-`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
-
-`shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
-
-Examples
-```yaml
-# Override the default uri and private key
-repo:
-  uri: git@github.com:org/repo.git
-  private_key: ((repo-name.private-key))
-```
-```yaml
-# Only trigger the pipeline when there has been changes
-# in the `src/main` folder, and unlock the encrypted repo.
-# Furthermore clone the repo as shallow.
-repo:
-  uri: git@github.com:organisation/repo-name.git
-  private_key: ((repo-name.private-key))
-  git_crypt_key: ((git-crypt-keys.repo-name))
-  watched_paths:
-  - src/main
-  shallow: true
 ```
 
 ## artifact_config
@@ -871,3 +809,70 @@ tasks:
 ```
 
 This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live-staging and live in parallel.
+
+
+## cron_trigger (DEPRECATED)
+__THIS FEATURE IS DEPRECATED. PLEASE SEE [timer trigger](#timer)__
+
+The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
+[Online Cron Tester](https://crontab.guru/)
+
+Schema
+```yaml
+cron_trigger: optional(string cron expression)
+```
+
+Example
+```yaml
+cron_trigger: "*/10 * * * 1-5"
+```
+
+
+## repo (DEPRECATED)
+__THIS FEATURE IS DEPRECATED. PLEASE SEE [git trigger](#git)__
+
+The optional top level dict `repo` dictates which git repo halfpipe will operate on.
+
+Schema
+```yaml
+repo:
+  uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
+  private_key: optional(string, default="((github.private_key))")
+  git_crypt_key: optional(string)
+  watched_paths: optional([]string)
+  ignored_paths: optional([]string)
+  branch: optional(string)
+  shallow: optional(bool, default=false)
+```
+
+`uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
+
+`private_key` allows you to specify the private key to use when cloning the repo.
+
+`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
+
+`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
+
+`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
+
+`shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
+
+Examples
+```yaml
+# Override the default uri and private key
+repo:
+  uri: git@github.com:org/repo.git
+  private_key: ((repo-name.private-key))
+```
+```yaml
+# Only trigger the pipeline when there has been changes
+# in the `src/main` folder, and unlock the encrypted repo.
+# Furthermore clone the repo as shallow.
+repo:
+  uri: git@github.com:organisation/repo-name.git
+  private_key: ((repo-name.private-key))
+  git_crypt_key: ((git-crypt-keys.repo-name))
+  watched_paths:
+  - src/main
+  shallow: true
+```
