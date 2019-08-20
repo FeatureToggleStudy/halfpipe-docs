@@ -62,19 +62,19 @@ Halfpipe (https://docs.halfpipe.io/manifest/#Manifest)
 
 Whoa, a link with up to date information on how to fix the error? NEAT!
 
-The cli has 100% coverage of all available features in Halfpipe and checks for all sorts of non-obvious stuff that would result in the good o'l fashion `shit this does not work in CI, let me push a fix real quick`-loop
+The cli does as much up-front validation as it can for all the features in Halfpipe and checks for all sorts of non-obvious stuff that would result in the good ol' fashion "shit this does not work in CI, let me push a fix real quick" loop
 
 ### GitHub Auth
 
 Authentication with Concourse and Vault uses GitHub Oauth.
 
-The way things are structured a "team" corresponds to a organization in CF, a team in Github, a team in Concourse and a path in Vault.
+The way things are structured a "team" corresponds to a team in Github, a team in Concourse and a path in Vault.
 
 This means that if you want to see pipelines and secrets for `project X`, your GitHub user **must** be part of the `project X` GitHub team.
 
 ### Concourse
 
-Concourse is a neat CI system where **everything** runs in ephemeral Docker containers. Concourse also boosts a pretty kick ass CLI and UI.
+Concourse is a neat CI system where **everything** runs in ephemeral Docker containers.
 
 ....The thing is that the pipeline definitions can become a tad verbose and confusing at times. That's why Halfpipe was created.
 
