@@ -17,8 +17,9 @@ Schema
 team: required(string)
 pipeline: required(string)
 slack_channel: optional(string regex '#.+')
-cron_trigger: optional(string cron expression)
-repo: optional(repo)
+triggers: optional(list(trigger)
+cron_trigger: optional(string cron expression) #DEPRECATED
+repo: optional(repo) #DEPRECATED
 artifact_config: optional(artifact_config)
 feature_toggles: optional(list(string))
 tasks: required(list)
@@ -56,7 +57,115 @@ Example
 slack_channel: "#ci-alerts"
 ```
 
-## cron_trigger
+## triggers
+
+The top level list `triggers` dictates on what the pipeline should trigger on.
+
+Schema
+```yaml
+triggers:
+  - type: required(string)
+    ...      [ task specific options ]
+```
+
+`type` must be one of the supported task types: `git`, `timer`, `docker`
+
+Example
+```yaml
+triggers:
+- type: git
+  ...                # git specific options
+- type: timer
+  ...                # timer specific options
+```
+
+### git
+The optional trigger `git` dictates which git repo halfpipe will operate on.
+
+Schema
+```yaml
+- type: git
+  uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
+  private_key: optional(string, default="((github.private_key))")
+  git_crypt_key: optional(string)
+  watched_paths: optional([]string)
+  ignored_paths: optional([]string)
+  branch: optional(string)
+  shallow: optional(bool, default=false)
+```
+
+`uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
+
+`private_key` allows you to specify the private key to use when cloning the repo.
+
+`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
+
+`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
+
+`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
+
+`shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
+
+Examples
+```yaml
+# Override the default uri and private key
+triggers:
+- type:git
+  uri: git@github.com:org/repo.git
+  private_key: ((repo-name.private-key))
+```
+```yaml
+# Only trigger the pipeline when there has been changes
+# in the `src/main` folder, and unlock the encrypted repo.
+# Furthermore clone the repo as shallow.
+triggers:
+- type:git
+  uri: git@github.com:organisation/repo-name.git
+  private_key: ((repo-name.private-key))
+  git_crypt_key: ((git-crypt-keys.repo-name))
+  watched_paths:
+  - src/main
+  shallow: true
+```
+
+### timer
+
+The optional trigger `timer` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
+[Online Cron Tester](https://crontab.guru/)
+
+
+Schema
+```yaml
+- type: timer
+  cron: required(string cron expression)
+```
+
+Example
+```yaml
+- type: timer
+  cron: "*/10 * * * 1-5"
+```
+
+### docker
+The optional trigger `docker` can be set to run the pipeline when a docker image has been updated.
+
+Schema
+```yaml
+- type: docker
+  image: required(string)
+  username: optional(string)
+  password: optional(string)
+```
+
+Example
+```yaml
+- type: docker
+  image: "eu.gcr.io/halfpipe-io/halfpipe-example-docker"
+```
+  
+## cron_trigger (DEPRECATED)
+__THIS FEATURE IS DEPRECATED. PLEASE SEE [timer trigger](#timer)__ 
+
 The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
 [Online Cron Tester](https://crontab.guru/)
 
@@ -71,7 +180,9 @@ cron_trigger: "*/10 * * * 1-5"
 ```
 
 
-## repo
+## repo (DEPRECATED)
+__THIS FEATURE IS DEPRECATED. PLEASE SEE [git trigger](#git)__ 
+ 
 The optional top level dict `repo` dictates which git repo halfpipe will operate on.
 
 Schema
