@@ -36,6 +36,6 @@ Accessible with Springer Account: https://console.cloud.google.com/gcr/images/ha
 ### GCR Auth Issues
 There can be authentication issues with GCR on dev machines that also have `gcloud` installed. To reset back to using halfpipe credentials:
 ```
-mv ~/.docker/config.json ~/.docker/config.json.bak
-vault read -field=private_key /springernature/shared/halfpipe-gcr | docker login -u _json_key --password-stdin https://eu.gcr.io
+$ mv ~/.docker/config.json ~/.docker/config.json.bak
+$ vault read -field=private_key /springernature/shared/halfpipe-gcr | docker login -u _json_key --password-stdin https://eu.gcr.io
 ```
