@@ -643,18 +643,18 @@ Schema
 
 Minimal example
 
-Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/[pipeline name]/[GIT_REVISION]/...`
+Deployed code will be available at `http://marklogic.host:7654/[pipeline name]/[GIT_REVISION]/...`
 ```yaml
 tasks:
 - type: deploy-ml-zip
   deploy_zip: target/xquery.zip # zip of xquery files
   targets:                      # list of MarkLogic instances to deploy to
-  - ml.dev.springer-sbm.com
+  - marklogic.host
 ```
 
 Complete example
 
-Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-app/v1/...`
+Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/...`
 ```yaml
 - type: deploy-ml-zip
   name: deploy xquery - dev     # optional. defaults to auto-generated name
@@ -662,9 +662,9 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
   app_name: example-app         # optional. defaults to pipeline name
   app_version: v1               # optional. defaults to GIT_REVISION
   targets:                      # list of MarkLogic instances to deploy to
-  - ml.dev.springer-sbm.com
-  - ml.qa1.springer-sbm.com
-  - ml.write.live.sl.i.springer.com
+  - marklogic.dev.host
+  - marklogic.qa.host
+  - marklogic.live.host
   manual_trigger: false         # optional. default false
 ```
 
@@ -718,18 +718,18 @@ Schema
 
 Minimal example
 
-Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/[pipeline name]/[GIT_REVISION]/...`
+Deployed code will be available at `http://<marklogic.host>:7654/[pipeline name]/[GIT_REVISION]/...`
 ```yaml
 tasks:
 - type: deploy-ml-modules
   ml_modules_version: "2.1428"  # version in artifactory
   targets:                      # list of MarkLogic instances to deploy to
-  - ml.dev.springer-sbm.com
+  - marklogic.host
 ```
 
 Complete example
 
-Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-app/v1/...`
+Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/...`
 ```yaml
 - type: deploy-ml-modules
   name: deploy xquery - dev     # optional. defaults to auto-generated name
@@ -737,9 +737,9 @@ Deployed code will be available at `http://ml.dev.springer-sbm.com:7654/example-
   app_name: example-app         # optional. defaults to pipeline name
   app_version: v1               # optional. defaults to GIT_REVISION
   targets:                      # list of MarkLogic instances to deploy to
-  - ml.dev.springer-sbm.com
-  - ml.qa1.springer-sbm.com
-  - ml.write.live.sl.i.springer.com
+  - marklogic.dev.host
+  - marklogic.qa.host
+  - marklogic.live.host
   manual_trigger: false         # optional. default false
 ```
 
