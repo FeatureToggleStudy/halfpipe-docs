@@ -114,7 +114,7 @@ During a migration from Auto Pipelines to Halfpipe its safest to copy the old cf
 
 ### Cloud Foundry environment variables
 
-Esnvironment variables set by Auto Pipeline:
+Environment variables set by Auto Pipeline:
 
 * `METRICS_PREFIX`
 * `TE_COMPONENT_ENV`
