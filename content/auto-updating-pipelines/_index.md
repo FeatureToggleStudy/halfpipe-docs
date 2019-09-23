@@ -30,8 +30,3 @@ From this screen you can easily see the git commit of the version, which is usef
 The environment variable `BUILD_VERSION` is set in halfpipe tasks.
 
 If halfpipe update added any new tasks, existing versions of the `version` resource will be disabled. This prevents new tasks running immediately at the previous version (e.g. if you added a new task at the end of the pipeline it will not be triggered for the previous build).
-
-### Triggering tasks with a specific version
-Before triggering a task, click on the `version` resource and pin it to the version you want to use.
-
-![versions](/images/update-pipeline/pinned-version.png)
