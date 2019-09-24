@@ -743,7 +743,7 @@ Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/
   manual_trigger: false         # optional. default false
 ```
 
-### Parallel
+### parallel
 
 This task enables you to run tasks in parallel.
 
@@ -777,6 +777,58 @@ tasks:
 ```
 
 This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live-staging and live in parallel.
+
+### sequence
+
+This task enables you to run tasks in sequence.
+
+It can only be used inside a parallel task!
+
+Schema
+```yaml
+- type: sequence
+  tasks: required(list(task))
+```
+
+Example
+```yaml
+tasks:
+- type: run
+  name: a
+- type: parallel
+  tasks:
+  - type: sequence
+    tasks:
+    - type: run
+      name: b1
+    - type: run
+      name: b2
+  - type: sequence
+    tasks:
+    - type: run
+      name: c1
+    - type: run
+      name: c2
+    - type: run
+      name: c3
+  - type: run
+    name: d
+- type: run
+  name: e
+```
+
+This would create a pipeline that looks like
+```
+       +----b1----b2----\                            
+       |                 \                           
+       |                  \                          
+ a-----|----c1----c2----c3 ----e                     
+       |                  /                          
+       |                 /                           
+       +----d-----------/    
+```
+ 
+i.e after `a` has run `b1`, `c1`, `d` will all start to execute in parallel. After `b1` has finished `b2` will start executing. After `c1` has finished `c2` then finally `c3` will execute. Once `b2`, `c3` and `d` have finished `e` will start executing.
 
 
 ### Parallel Tasks (DEPRECATED)
