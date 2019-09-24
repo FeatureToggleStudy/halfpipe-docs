@@ -96,6 +96,7 @@ Schema
   ignored_paths: optional([]string)
   branch: optional(string)
   shallow: optional(bool, default=false)
+  manual_trigger: optional(bool, default=false)
 ```
 
 `uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
@@ -109,6 +110,8 @@ Schema
 `branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
 
 `shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
+
+`manual_trigger` turns off triggering on commits. Useful where we just want the latest git source but trigger from a `timer` or `docker`.
 
 Examples
 ```yaml
