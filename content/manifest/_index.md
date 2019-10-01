@@ -24,9 +24,6 @@ triggers: optional(list(trigger)
 artifact_config: optional(artifact_config)
 feature_toggles: optional(list(string))
 tasks: required(list)
-
-cron_trigger: optional(string cron expression) #DEPRECATED - use triggers
-repo: optional(repo) #DEPRECATED - use triggers
 ```
 
 The bare minimum example - run a script in a docker container.
@@ -251,7 +248,6 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   privileged: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -275,8 +271,6 @@ Schema
 `restore_artifacts` restores all previously saved artifacts into the working dir of the job. I.e if you have saved `build/my/thing` and `some/other/path` in a run/docker-compose task, and you set `restore_artifacts: true` in a subsequent task the files `build/my/thing` and `some/other/path` will be present.
 
 `privileged` run the task as root. not recommended but sometimes necessary e.g. when using docker-in-docker
-
-`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
 
@@ -337,7 +331,6 @@ Schema
   save_artifacts: optional(list(string))
   save_artifacts_on_failure: optional(list(string))
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -356,8 +349,6 @@ Schema
 `restore_artifacts` see the `run` task for description.
 
 `save_artifacts_on_failure` see the `run` task for description.
-
-`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
 
@@ -399,7 +390,6 @@ Schema
   vars: optional(hashmap(string, string))
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -418,8 +408,6 @@ Schema
 `manifest` defaults to `manifest.yml`, relative to the `.halfpipe.io` file. If you have generated a manifest in a previous task that you wish to you you must use the path `../artifacts/<path-to-saved-manifest>`.
 
 `pre_promote` is a list of run tasks, that will be executed after the app has been deployed as a candidate but before the app gets promoted to live. The pre promote jobs will get the environment variable `TEST_ROUTE` injected with the route to the candidate app.
-
-`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -472,7 +460,6 @@ Schema
   password: optional(string)
   image: required(string)
   restore_artifacts: optional(bool, default=false)
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -483,8 +470,6 @@ Schema
 `build_path` path to folder to build docker iamge in, relative to .halfpipe.io file.
 
 `restore_artifacts` see the `run` task for description.
-
-`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
 
@@ -544,7 +529,6 @@ Schema
   docker_compose_service: optional(string, default="code")
   git_clone_options: optional(string, default="")
   vars: optional(hashmap(string, string))
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -565,8 +549,6 @@ Schema
 `git_clone_options` custom options for the `git clone` of the consumer repository. e.g. `--depth 100`. For valid options see <https://git-scm.com/docs/git-clone>.
 
 `vars` is a hashmap of environment variables that will be available to the docker-compose service used for the task
-
-`parallel` run the task in parallel with other tasks. See [Running tasks in parallel](#parallel-tasks).
 
 `retries` the number of times the task will be retried if it fails.
 
@@ -615,7 +597,6 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -633,8 +614,6 @@ Schema
 `use_build_version` use `$BUILD_VERSION` set by the [update-pipeline feature](/experimental-features/#version) instead of `$GIT_REVISION`. Cannot be set if `app_version` is set.
 
 `targets` a list of MarkLogic instances to deploy to.
-
-`parallel` run the task in parallel with other tasks.
 
 `manual_trigger` require manual triggering of task in Concourse.
 
@@ -690,7 +669,6 @@ Schema
   app_version: optional(string, default=$GIT_REVISION)
   use_build_version: optional(bool, default=false)
   targets: required(list(string))
-  parallel: optional(string, default=false) # DEPRECATED, please use `parallel` task instead
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
@@ -708,8 +686,6 @@ Schema
 `use_build_version` use `$BUILD_VERSION` set by the [update-pipeline feature](/experimental-features/#version) instead of `$GIT_REVISION`. Cannot be set if `app_version` is set.
 
 `targets` a list of MarkLogic instances to deploy to.
-
-`parallel` run the task in parallel with other tasks. See [parallel tasks](#parallel-tasks).
 
 `manual_trigger` require manual triggering of task in Concourse.
 
@@ -832,102 +808,3 @@ This would create a pipeline that looks like
 ```
  
 i.e after `a` has run `b1`, `c1`, `d` will all start to execute in parallel. After `b1` has finished `b2` will start executing. After `c1` has finished `c2` then finally `c3` will execute. Once `b2`, `c3` and `d` have finished `e` will start executing.
-
-
-### Parallel Tasks (DEPRECATED)
-
-By default tasks are run in serial top to bottom, with each task only running if the previous task was successful. Two or more adjacent tasks can be configured to run in parallel by setting `parallel: $(GROUP_NAME)`.
-
-Example
-```yaml
-tasks:
-- type: run
-  name: build
-  ...
-- type: deploy-cf
-  name: deploy to dev
-  parallel: group1
-  ...
-- type: deploy-cf
-  name: deploy to QA
-  parallel: group1
-  ...
-- type: deploy-cf
-  name: deploy live staging
-  parallel: group2
-
-- type: deploy-cf
-  name: deploy live
-  parallel: group2
-
-
-```
-
-This would create a pipeline that runs the build, then deploys to dev and QA in parallel, and then - if both tasks are successful - will deploy to live-staging and live in parallel.
-
-
-## cron_trigger (DEPRECATED)
-__THIS FEATURE IS DEPRECATED. PLEASE SEE [timer trigger](#timer)__
-
-The optional field `cron_trigger` can be set to run the pipeline on a cron timer. The expression must be a valid cron expression:
-[Online Cron Tester](https://crontab.guru/)
-
-Schema
-```yaml
-cron_trigger: optional(string cron expression)
-```
-
-Example
-```yaml
-cron_trigger: "*/10 * * * 1-5"
-```
-
-
-## repo (DEPRECATED)
-__THIS FEATURE IS DEPRECATED. PLEASE SEE [git trigger](#git)__
-
-The optional top level dict `repo` dictates which git repo halfpipe will operate on.
-
-Schema
-```yaml
-repo:
-  uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
-  private_key: optional(string, default="((github.private_key))")
-  git_crypt_key: optional(string)
-  watched_paths: optional([]string)
-  ignored_paths: optional([]string)
-  branch: optional(string)
-  shallow: optional(bool, default=false)
-```
-
-`uri` controls the git repo the pipeline is operating on, if you leave this field blank halfpipe will try to resolve the uri for you.
-
-`private_key` allows you to specify the private key to use when cloning the repo.
-
-`watched_paths` and `ignored_paths` takes a list of globs or paths. This allows a pipeline to only trigger when there has been changes to a set of predefined paths, or to stop changes to certain paths from triggering the pipeline.
-
-`git_crypt_key` can be used to unlock a encrypted repository. To use this you must base64 encode your git-crypt key and put it in vault and reference it.
-
-`branch` configures the branch that the pipeline will track. This is optional on master but *must* be configured if executing halfpipe on a branch.
-
-`shallow` configures if the repo should be shallow cloned, `git clone ... --depth 1`. This is helpful if your repo is large and you dont need the full history.
-
-Examples
-```yaml
-# Override the default uri and private key
-repo:
-  uri: git@github.com:org/repo.git
-  private_key: ((repo-name.private-key))
-```
-```yaml
-# Only trigger the pipeline when there has been changes
-# in the `src/main` folder, and unlock the encrypted repo.
-# Furthermore clone the repo as shallow.
-repo:
-  uri: git@github.com:organisation/repo-name.git
-  private_key: ((repo-name.private-key))
-  git_crypt_key: ((git-crypt-keys.repo-name))
-  watched_paths:
-  - src/main
-  shallow: true
-```
