@@ -65,11 +65,11 @@ The top level list `triggers` defines what the pipeline should trigger on.
 Schema
 ```yaml
 triggers:
-- type: required(string, git|timer|docker)
+- type: required(string, git|timer|docker|pipeline)
   ...   [ task specific options ]
 ```
 
-`type` must be one of the supported task types: `git`, `timer`, `docker`
+`type` must be one of the supported task types: `git`, `timer`, `docker`, `pipeline`
 
 Example
 ```yaml
