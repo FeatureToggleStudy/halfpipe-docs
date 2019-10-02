@@ -167,6 +167,27 @@ Example
   image: "eu.gcr.io/halfpipe-io/halfpipe-example-docker"
 ```
 
+### pipeline
+The optional trigger `pipeline` can be set to trigger a pipeline when a another pipeline/job has succeeded.
+
+Note that you cannot trigger on pipelines from another team.
+
+Schema
+```yaml
+- type: pipeline
+  pipeline: required(string)
+  job: required(string)
+  status: optional(string, succeeded|failed|errored|aborted, default="succeeded")
+```
+
+Example
+```yaml
+- type: pipeline
+  pipeline: my-cool-pipeline
+  job: Deploy to Live (SNPaaS)
+  status: failed
+```
+
 ## artifact_config
 By default all artifacts saved and retrieved will be placed in a shared Google bucket.
 
