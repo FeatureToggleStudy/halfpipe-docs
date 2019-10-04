@@ -6,6 +6,8 @@ weight: 150
 ## Ask for help
 We try to be available as much as possible on slack in `#halfpipe-users`. Slack is great for quick things, but more involved discussions can get hard to follow, so we also have a Halfpipe category in [ee-discourse](https://ee-discourse.springernature.io/c/halfpipe). Also we can always arrange a chat in person in London or Berlin, or by video call to Pune.
 
+If you ask for help in `#halfpipe-users` please make sure to include a link to your pipeline and a github url for your repo.
+
 ## Submit a bug
 We use [GitHub issues](https://github.com/springernature/halfpipe/issues) to track bugs and feature requests. PRs welcome too :)
 
@@ -22,4 +24,4 @@ We publish monthly(ish) updates on our progress to [Hive](https://hive.springern
 If you would like to work with us to help shape the direction CI/CD at Springer Nature, we have an Engineering Enablement stakeholder group that collaborates on our roadmap and backlog prioritisation. Ask a member of the halfpipe team to find out more.
 
 ## Service status
-We communicate updates to any disruptions on slack in `#halfpipe-users` and `#follow-ee`.
+We communicate updates to any disruptions on `http://status.ee.springernature.io` and in the slack channnels `#halfpipe-users` and `#follow-ee`.
