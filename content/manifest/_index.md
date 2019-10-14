@@ -411,7 +411,7 @@ Schema
   vars: optional(hashmap(string, string))
   deploy_artifact: optional(string)
   pre_promote: optional(list(run-task))
-  pre_start: optional(string)
+  pre_start: optional(list(string))
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
   timeout: optional(duration, default="1h")
@@ -431,7 +431,7 @@ Schema
 
 `pre_promote` is a list of run tasks, that will be executed after the app has been deployed as a candidate but before the app gets promoted to live. The pre promote jobs will get the environment variable `TEST_ROUTE` injected with the route to the candidate app.
 
-`pre_start` is an optional cf command to run as part of [cf halfpipe-push](/cf-deployment/#what-happens-in-concourse) immediately before the candidate app is started. Useful for applying configuration that is not supported in the CF manifest. e.g. `cf add-network-policy ...`
+`pre_start` is an optional list of cf commands to run as part of [cf halfpipe-push](/cf-deployment/#what-happens-in-concourse) immediately before the candidate app is started. Useful for applying configuration that is not supported in the CF manifest. e.g. `cf add-network-policy ...`
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -461,7 +461,9 @@ Examples
     SKIP_SSL_CHECK: true
     APP_SECRET: ((myapp.app_secret_name))
   deploy_artifact: target/distribution/artifact.zip
-  pre_start: cf add-network-policy myapp-CANDIDATE --destination-app myapp-CANDIDATE --protocol tcp --port 7600 
+  pre_start: 
+  - cf add-network-policy myapp-CANDIDATE --destination-app myapp-CANDIDATE --protocol tcp --port 7600
+  - cf events myapp-CANDIDATE
   pre_promote:
   - type: run
     name: run-smoke-tests
