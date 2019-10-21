@@ -272,6 +272,7 @@ Schema
   privileged: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -296,6 +297,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -354,6 +358,7 @@ Schema
   restore_artifacts: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -374,6 +379,8 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -414,6 +421,7 @@ Schema
   pre_start: optional(list(string))
   retries: optional(int, default=1)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -438,6 +446,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments. See [default values in vault](/cf-deployment/#default-values-in-vault) for more information about how optional parameters are set to default values.
 
@@ -489,6 +500,7 @@ Schema
   restore_artifacts: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
   vars: optional(hashmap(string, string))
 ```
@@ -501,6 +513,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -558,6 +573,7 @@ Schema
   vars: optional(hashmap(string, string))
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -580,6 +596,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -627,6 +646,7 @@ Schema
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -647,6 +667,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -699,6 +722,7 @@ Schema
   manual_trigger: optional(bool, default=false)
   retries: optional(int, default=0)
   notify_on_success: optional(bool, default=false)
+  notifications: optional(notifications)
   timeout: optional(duration, default="1h")
 ```
 
@@ -719,6 +743,9 @@ Schema
 `retries` the number of times the task will be retried if it fails.
 
 `notify_on_success` sends a message to the top level defined `slack_channel` if this task succeeds.
+
+`notifications` please see [slack-notifications](#slack-notifications)
+
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
@@ -835,3 +862,23 @@ This would create a pipeline that looks like
 ```
  
 i.e after `a` has run `b1`, `c1`, `d` will all start to execute in parallel. After `b1` has finished `b2` will start executing. After `c1` has finished `c2` then finally `c3` will execute. Once `b2`, `c3` and `d` have finished `e` will start executing.
+
+# Slack notifications
+
+Sometimes you might need more fine grained controls over the slack notifications sent out from your tasks. In this case you can use the `notifications` configuration in your tasks.
+
+Note that if you set this it will override the normal notification behaviour for the tasks.
+
+Schema
+```yaml
+notifications:
+  on_success: optional(list(string), default=[])
+  on_success_message: optional(string, default="Pipeline PIPELINE-NAME, task TASK-NAME succeeded URL")
+  on_failure: optional(list(string), default=[])
+  on_failure_message: optional(string, default="Pipeline PIPELINE-NAME, task TASK-NAME failed URL")
+```
+
+`on_success` configures which slack channels should be notified with the `on_success_message` if the task succeeds.
+
+`on_failure` configures which slack channels should be notified with the `on_failure_message` if the task fails.
+
