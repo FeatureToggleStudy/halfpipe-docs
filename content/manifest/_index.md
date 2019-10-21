@@ -865,9 +865,9 @@ i.e after `a` has run `b1`, `c1`, `d` will all start to execute in parallel. Aft
 
 # Slack notifications
 
-Sometimes you might need more fine grained controls over the slack notifications sent out from your tasks. In this case you can use the `notifications` configuration in your tasks.
+Sometimes you might need more fine grained controls over the slack notifications. In this case you can use the `notifications` configuration in your tasks.
 
-Note that if you set this it will override the normal notification behaviour for the tasks.
+Note that if you set this it will override the normal notification behaviour for the task.
 
 Schema
 ```yaml
