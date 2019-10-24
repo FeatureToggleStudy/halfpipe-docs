@@ -36,7 +36,7 @@ Unlike auto-pipelines, you have to explicitly configure the consumers in the pro
 
 * finds out what version of the consumer is running by hitting `http://[consumer-host]/internal/version`
 * clones consumer repo at that revision
-* runs the consumer cdcs using it's docker-compose configuration
+* runs the consumer cdcs using its docker-compose configuration
 
 The best place to run the tests is in the `pre_promote` stage. This will use the `TEST_ROUTE` and prevent deployment if the tests fail.
 
