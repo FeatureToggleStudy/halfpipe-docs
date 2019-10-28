@@ -18,28 +18,28 @@ The GitHub team `Springer Nature Read` needs **read access** to your repository 
 1. Download the binary for your OS from<br>
   <https://github.com/springernature/halfpipe/releases/latest>
 2. Install the binary somewhere on your path<br>
-  ```install halfpipe_darwin_3.23.0 /usr/local/bin/halfpipe```
+  `install halfpipe_darwin_3.23.0 /usr/local/bin/halfpipe`
 3. Check it works<br>
-  ```halfpipe --help```
+  `halfpipe --help`
 
 ## Fly
 1. Download the binary for your OS from the bottom right of the Concourse interface<br/>
   https://concourse.halfpipe.io
 2. Install the binary somewhere on your path<br>
-  ```install fly /usr/local/bin```
+  `install fly /usr/local/bin`
 3. Login to Concourse<br>
-  ```fly -t ci login -c https://concourse.halfpipe.io -n <MY-TEAM>```
+  `fly -t ci login -c https://concourse.halfpipe.io -n <MY-TEAM>`
 
 ## Vault
 1. Download the binary for your OS from<br>
   https://www.vaultproject.io/downloads.html
 2. Install the binary somewhere on your path<br>
-  ```install vault /usr/local/bin```
+  `install vault /usr/local/bin`
 3. Create a personal token in GitHub at https://github.com/settings/tokens/new<br>
   Name it something cool, say `vault`, and select `read:org` under `admin:org`.<br>
   Save the token somewhere secret on your machine, you can always revoke and regenerate your token if you lose it :)
 4. Configure Vault Server<br>
 The vault CLI will use the server defined in the environment variable `VAULT_ADDR`, so let's point it to our Vault installation.
-  ```echo "export VAULT_ADDR=https://vault.halfpipe.io" >> ~/.bashrc```
+  `echo "export VAULT_ADDR=https://vault.halfpipe.io" >> ~/.bashrc`
 5. Login to Vault<br>
-  ```vault login -method=github token=$(cat ~/.my-vault-token)```
+  `vault login -method=github token=$(cat ~/.my-vault-token)`

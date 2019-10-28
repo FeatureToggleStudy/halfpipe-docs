@@ -15,7 +15,7 @@ The manifest must
 You can get started with a new manifest file by running the command `halfpipe init` inside a git repository.
 
 
-Schema
+__Schema__
 ```yaml
 team: required(string)
 pipeline: required(string)
@@ -48,12 +48,12 @@ The value of this field is used to construct paths for vault secrets and artifac
 ## slack_channel
 The optional field `slack_channel` can be set to enable a notification when any of the tasks fail. Must be a quoted as `#` is the mark of a comment in YAML.
 
-Schema
+__Schema__
 ```yaml
 slack_channel: optional(string regex '#.+')
 ```
 
-Example
+__Example__
 ```yaml
 slack_channel: "#ci-alerts"
 ```
@@ -62,7 +62,7 @@ slack_channel: "#ci-alerts"
 
 The top level list `triggers` defines what the pipeline should trigger on.
 
-Schema
+__Schema__
 ```yaml
 triggers:
 - type: required(string, git|timer|docker|pipeline)
@@ -71,7 +71,7 @@ triggers:
 
 `type` must be one of the supported task types: `git`, `timer`, `docker`, `pipeline`
 
-Example
+__Example__
 ```yaml
 triggers:
 - type: git
@@ -83,7 +83,7 @@ triggers:
 ### git
 The optional trigger `git` defines which git repo halfpipe will operate on.
 
-Schema
+__Schema__
 ```yaml
 - type: git
   uri: optional(string, default=resolved from the .git/config within the repo you are executing halfpipe in)
@@ -110,7 +110,7 @@ Schema
 
 `manual_trigger` turns off triggering on commits. Useful where we just want the latest git source but trigger from a `timer` or `docker`.
 
-Examples
+__Examples__
 ```yaml
 # Override the default uri and private key
 triggers:
@@ -138,13 +138,13 @@ The optional trigger `timer` can be set to run the pipeline on a timer. The expr
 [Online Cron Tester](https://crontab.guru/)
 
 
-Schema
+__Schema__
 ```yaml
 - type: timer
   cron: required(string cron expression)
 ```
 
-Example
+__Example__
 ```yaml
 - type: timer
   cron: "*/10 * * * 1-5"
@@ -153,7 +153,7 @@ Example
 ### docker
 The optional trigger `docker` can be set to run the pipeline when a docker image has been updated.
 
-Schema
+__Schema__
 ```yaml
 - type: docker
   image: required(string)
@@ -161,7 +161,7 @@ Schema
   password: optional(string)
 ```
 
-Example
+__Example__
 ```yaml
 - type: docker
   image: "eu.gcr.io/halfpipe-io/halfpipe-example-docker"
@@ -172,7 +172,7 @@ The optional trigger `pipeline` can be set to trigger a pipeline when a another 
 
 Note that you cannot trigger on pipelines from another team.
 
-Schema
+__Schema__
 ```yaml
 - type: pipeline
   pipeline: required(string)
@@ -180,7 +180,7 @@ Schema
   status: optional(string, succeeded|failed|errored|aborted, default="succeeded")
 ```
 
-Example
+__Example__
 ```yaml
 - type: pipeline
   pipeline: my-cool-pipeline
@@ -193,7 +193,7 @@ By default all artifacts saved and retrieved will be placed in a shared Google b
 
 The optional top level dict `artifact_config` dictates what bucket will be used when storing and retrieving artifacts. This is useful if your project have strict security requirements.
 
-Schema
+__Schema__
 ```yaml
 artifact_config:
   bucket: required(string)
@@ -212,7 +212,7 @@ To use this feature
 * Save the key in vault under a path and make sure it looks similar to the key under `/springernature/shared/halfpipe-gcr`.
 * Make sure you grant the service account `Storage Legacy Bucket Owner` permission on the bucket.
 
-Examples
+__Examples__
 ```yaml
 # Override the artifact configuration
 artifact_config:
@@ -226,7 +226,7 @@ This list of strings turns on experimental features.
 ## Tasks
 The top level dict `tasks` dictates what halfpipe should do.
 
-Schema
+__Schema__
 ```yaml
 tasks:
   - type: required(string)
@@ -238,7 +238,7 @@ tasks:
 
 `name` is an optional name for the task, which will be displayed in the Concourse interface.
 
-Example
+__Example__
 ```yaml
 tasks:
 - type: run
@@ -255,7 +255,7 @@ Run is the most generic piece of work you can do. It represents a job in a Conco
 pipeline where a script will be run in a docker container. If the script returns a non-zero
 exit code the task will be considered failed and any subsequent tasks will not run.
 
-Schema
+__Schema__
 ```yaml
 - type: run
   name: optional(string)
@@ -303,7 +303,7 @@ Schema
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
-Examples
+__Examples__
 ```yaml
 # Minimal
 - type: run
@@ -344,7 +344,7 @@ Examples
 ### docker-compose
 This task will execute docker-compose based on `docker-compose.yml`. This file must be present in the same directory as the halfpipe manifest.
 
-Schema
+__Schema__
 ```yaml
 - type: docker-compose
   name: optional(string)
@@ -384,7 +384,7 @@ Schema
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
-Examples
+__Examples__
 ```yaml
 # Minimal
 - type: docker-compose
@@ -403,7 +403,7 @@ deploy-cf is used to deploy an app to Cloud Foundry with zero downtime.
 
 [Here you can find more information](/cf-deployment/) about how deploy-cf works under the hood!
 
-Schema
+__Schema__
 ```yaml
 - type: deploy-cf
   name: optional(string)
@@ -452,7 +452,7 @@ Schema
 
 In your team's vault you will find the map `cloudfoundry` containing entries for our Cloud Foundry environments. See [default values in vault](/cf-deployment/#default-values-in-vault) for more information about how optional parameters are set to default values.
 
-Examples
+__Examples__
 ```yaml
 # Minimal
 - type: deploy-cf
@@ -487,7 +487,7 @@ Examples
 Allows you to build a Docker image and push it to a docker registry
 The docker image will be tagged with the `latest` tag by default.
 
-Schema
+__Schema__
 ```yaml
 - type: docker-push
   name: optional(string)
@@ -560,7 +560,7 @@ This task is designed to run in a `producer's` pipeline. It helps running a `con
 
 For more information about migrating CDCs from auto-pipelines see [legacy CDCs](/legacy-cdcs)
 
-Schema
+__Schema__
 ```yaml
 - type: consumer-integration-test
   name: optional(string)
@@ -602,7 +602,7 @@ Schema
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
-Examples
+__Examples__
 
 The best place to run the consumer integration tests is in the `pre_promote` stage. This will use the `TEST_ROUTE` and prevent deployment if the tests fail.
 
@@ -634,7 +634,7 @@ If you want to run the consumer's tests after deployment then you must set the p
 
 This task deploys local XQuery files to MarkLogic using [ml-deploy](https://github.com/springernature/ml-deploy).
 
-Schema
+__Schema__
 ```yaml
 - type: deploy-ml-zip
   name: optional(string)
@@ -673,7 +673,7 @@ Schema
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
-Minimal example
+__Minimal example__
 
 Deployed code will be available at `http://marklogic.host:7654/[pipeline name]/[GIT_REVISION]/...`
 ```yaml
@@ -684,7 +684,7 @@ tasks:
   - marklogic.host
 ```
 
-Complete example
+__Complete example__
 
 Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/...`
 ```yaml
@@ -710,7 +710,7 @@ The task fetches the artifact from the [hosted Artifactory](/artifactory) and *n
 
 Basic auth credentials are provided in vault `vault read springernature/shared/artifactory`.
 
-Schema
+__Schema__
 ```yaml
 - type: deploy-ml-modules
   name: optional(string)
@@ -749,7 +749,7 @@ Schema
 
 `timeout` sets the timeout for task. If a command does not finish within this timeframe the task will fail.
 
-Minimal example
+__Minimal example__
 
 Deployed code will be available at `http://<marklogic.host>:7654/[pipeline name]/[GIT_REVISION]/...`
 ```yaml
@@ -760,7 +760,7 @@ tasks:
   - marklogic.host
 ```
 
-Complete example
+__Complete example__
 
 Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/...`
 ```yaml
@@ -780,13 +780,13 @@ Deployed code will be available at `http://<marklogic.host>:7654/example-app/v1/
 
 This task enables you to run tasks in parallel.
 
-Schema
+__Schema__
 ```yaml
 - type: parallel
   tasks: required(list(task))
 ```
 
-Example
+__Example__
 ```yaml
 tasks:
 - type: run
@@ -817,13 +817,13 @@ This task enables you to run tasks in sequence.
 
 It can only be used inside a parallel task!
 
-Schema
+__Schema__
 ```yaml
 - type: sequence
   tasks: required(list(task))
 ```
 
-Example
+__Example__
 ```yaml
 tasks:
 - type: run
@@ -869,7 +869,7 @@ Sometimes you might need more fine grained controls over the slack notifications
 
 Note that if you set this it will override the normal notification behaviour for the task.
 
-Schema
+__Schema__
 ```yaml
 notifications:
   on_success: optional(list(string), default=[])

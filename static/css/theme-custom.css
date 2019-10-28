@@ -22,6 +22,10 @@ ul, ol {
     margin-top: 1rem;
 }
 
+#body-inner > pre {
+    margin-top: 0;
+}
+
 #body .padding {
     padding: 1rem 3rem;
 }
