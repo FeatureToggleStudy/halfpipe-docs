@@ -1,5 +1,5 @@
 ---
-title: Manifest
+title: HalfPipe Manifest
 weight: 40
 ---
 
@@ -881,4 +881,3 @@ notifications:
 `on_success` configures which slack channels should be notified with the `on_success_message` if the task succeeds.
 
 `on_failure` configures which slack channels should be notified with the `on_failure_message` if the task fails.
-

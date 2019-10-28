@@ -3,79 +3,39 @@ title: Vault
 weight: 60
 ---
 
-## Install CLI
+See [Getting Started](/getting-started#vault) for installation and login instructions.
 
-Download the latest Vault client from <https://www.vaultproject.io/downloads.html>
+As well as the CLI, Vault also has a web interface: [vault.halfpipe.io](https://vault.halfpipe.io/ui/vault/auth?with=github)
 
-## Login
+## Provided secrets
 
-All authentication with Vault **must** happen with a GitHub token. Be aware that when you have logged in your token will only be valid for 768 hours, after that you will receive a 403 when using the Vault CLI, but this can be solved by periodically running `vault token renew` or by logging in again.
-
-### Acquiring a token
-
-[Create a new GitHub token](https://github.com/settings/tokens/new)
-
-Name it something cool, say `vault` and select `read:org` under `admin:org`.
-
-Save the token somewhere secret on your machine, you can always revoke and regenerate your token if you lose it :)
-
-### Authenticate via the CLI
-The vault CLI will use the server defined in the environment variable `VAULT_ADDR`.
-
+Since we are so nice, we have pre-populated some secrets in Vault for each team. To read them:
 ```
-# in ~/.zshrc, ~/.zshenv ~/.bashrc or your place where you set your environment variables.
-$ cat ~/.zshenv | grep VAULT_ADDR
-export VAULT_ADDR=https://vault.halfpipe.io
+vault list /springernature/<YOUR-TEAM>
+vault list /springernature/shared
+vault read /springernature/<YOUR-TEAM>/cloudfoundry
 ```
 
-Now we can auth!
+### Cloud Foundry
+`/springernature/<YOUR-TEAM>/cloudfoundry` contains `username`, `password`, `api-dev`, `api-live`, `api-gcp`. `api-snpaas`. These secrets are used as default values by the `deploy-cf` task.
 
-```
-$ vault login -method=github token=....TOKEN_YOU_GOT_FROM_GITHUB....
-Successfully authenticated! You are now logged in.
-The token below is already saved in the session. You do not
-need to "vault auth" again with the token.
-token: .....SecretStuff...:)
-token_duration: 2764794
-token_policies: [default engineering-enablement]
-```
+### Concourse 
+`/springernature/<YOUR-TEAM>/concourse` contains `username`, `password`, `team` and `host`. These secrets can be used to login to Concourse with basic auth.
 
-### Authenticate via the Web UI
+### Artifactory
+`/springernature/shared/artifactory` contains `username`, `password` and `host`. These secrets can be used to access our [Artifactory](/artifactory) instance.
 
-[https://vault.halfpipe.io/ui/vault/auth?with=github](https://vault.halfpipe.io/ui/vault/auth?with=github)
+### Halfpipe GitHub 
+`/springernature/shared/halfpipe-github` contains `private_key`. This is the default private key for git cloning.
 
-## Pre populated secrets in Vault.
+### Halfpipe GCR 
+`/springernature/shared/halfpipe-gcr` contains `private_key`. This can be used to push and pull from our private Docker Registry that is hosted at https://eu.gcr.io/halfpipe-io
 
-Since we are so nice, we have pre populated some secrets in vault for your pleasure to help with repetative stuff.
+## Writing Secrets
 
-### /springernature/YOUR-TEAM/cloudfoundry
+You can store your own secrets under your team path `/springernature/<YOUR-TEAM>/...`.
 
-The `cloudfoundry` secret contains `username`, `password`, `api-dev`, `api-live`, `api-gcp`. `api-snpaas`. These secrets go very nicely together with the `deploy-cf` task.
-
-### /springernature/YOUR-TEAM/concourse
-The `concourse` secret contains `username`, `password`, `team` and `host`. These secrets can be used to login to Concourse with basic auth.
-
-### /springernature/shared/artifactory
-The `artifactory` secret contains `username`, `password` and `host`. These secrets can be used to publish artifacts to our [Artifactory](/artifactory) instance.
-
-### /springernature/shared/halfpipe-github
-
-The `halfpipe-github` secret contains `private_key`. This is the default private key for git unless you override it so you can clone a git repo without faffing around with deploy keys.
-
-### /springernature/shared/halfpipe-gcr
-
-The `halfpipe-gcr` secret contains `private_key`. This can be used to push/pull from our private Docker Registry that is hosted by Google.
-
-## Read and write secrets
-
-### Via CLI
-As mentioned above you will get a policy for each team you are part of. For example 'team-a', 'team-b'
-
-What this means in practice is that you will have rights to read, write, create and delete under the paths
-
-`/springernature/team-1/*` and `/springernature/team-2/*`
-
-In my example I have access to engineering-enablement
+See `vault write -h` for full details!
 
 ```
 $ vault write /springernature/engineering-enablement/ee-rocks for=sure another=key
@@ -86,34 +46,25 @@ Key             	Value
 refresh_interval	768h0m0s
 for             	sure
 another                 key
-
-# But no access to another team
-$ vault write /springernature/oscar/oscar-rocks for=sure
-Error writing data to springernature/oscar/oscar-rocks: Error making API request.
-
-URL: PUT https://vault.halfpipe.io/v1/springernature/oscar/oscar-rocks
-Code: 403. Errors:
-
-* permission denied
 ```
 
-Note: If you want to write several keys into the vault, you need to it all in one operation.
-`vault write` overrides all the keys that existed before.
+Note: If you want to write several keys into the secret map, you need to it all in one operation.
+`vault write` overrides all the keys that existed before!
 
-## How it works in concourse.
+The web interface can also be used to manage secrets: <https://vault.halfpipe.io>
 
-If you have a pipeline `P` in team `T` and that pipeline uses the secret `((secretMap.secretKey))` concourse will try to resolve the value at the paths
-`/springernature/T/P/secretMap`, `/springernature/T/secretMap` and `/springernature/shared/secretMap`. The former path have precedence over the latter.
+## Secrets in Concourse
+
+Secrets can be referenced in the Halfpipe manifest or in Concourse pipelines using the syntax `((<map>.<key>))`.
+
+If you have a pipeline `P` in team `T` and that pipeline uses the secret `((secretMap.secretKey))` concourse will try to resolve the value at the following paths, in order of precedence:
+
+`/springernature/T/P/secretMap`<br>
+`/springernature/T/secretMap`<br>
+`/springernature/shared/secretMap`
 
 So if you get an error from the halfpipe cli telling you that the secret cannot be found this would be solved by either
 
-```
-vault write /springernature/T/P/secretMap secretKey=superSecret
-```
-
-or
-
-```
-vault write /springernature/T/secretMap secretKey=superSecret
-
-```
+`vault write /springernature/T/P/secretMap secretKey=superSecret`<br>
+or<br>
+`vault write /springernature/T/secretMap secretKey=superSecret`
