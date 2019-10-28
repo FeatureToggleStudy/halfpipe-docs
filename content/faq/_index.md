@@ -38,6 +38,40 @@ $ fly -t ci hijack --url=.. --step=.. "/bin/sh"
 456ac93e-1c32-4486-6055-86d1c8ebd7ec
 ```
 
+### How do I use secrets in my build/app?
+
+We use [vault](/vault), so make sure that is setup and working before continuing.
+
+Once you have it installed you can write a secret like so
+
+```
+$ vault write /springernature/my-team/myApp dbUsername=readUser dbPassword=superSecret
+```
+
+And to use simply put
+```
+vars:
+  DB_USER: ((myApp.dbUsername))
+  DB_PASSWORD: ((myApp.dbPassword))
+```
+
+in a [run](/manifest/#run), [docker-compose](manifest/#docker-compose) or [deploy-cf](/manifest/#deploy-cf) task in the `.halfpipe.io` manifest. This way the secrets will be available as the environment variables `DB_USER` and `DB_PASSWORD`.
+
+Check out this [example](https://github.com/springernature/halfpipe-examples/blob/master/golang/.halfpipe.io) for an actual pipeline that uses secrets
+
+### How do use docker-compose?
+
+Simple, make sure `docker-compose run app` does what you want it to do on your machine then put the following task in the halfpipe [manifest](/manifest/#docker-compose)
+
+```
+- type: docker-compose
+```
+
+### How do I get an artifact?
+
+[check this out](/artifacts/)
+
+
 ### How can I download something from a build container?
 Sometimes it's useful to download something from the container, a built jar, a test report, etc.
 
@@ -67,7 +101,7 @@ git rev-list --count "$GIT_REVISION"
 
 Note that for this to work your docker image __must__ have git installed.
 
-### My Docker image specifies a USER, but all the files in Concourse are owned by root. :(
+### My Docker image specifies a USER, but all the files in Concourse are owned by root
 
 There are two issues related to this
 
@@ -76,7 +110,7 @@ There are two issues related to this
 
 The easy solution is to simply remove the `USER` in the Dockerfile and let everything run as root.
 
-### Im getting a 403 when trying to use Vault, but it used to work!
+### I get a 403 when trying to use Vault, but it used to work!
 
 This most likely means your token have expired. When you do a login you will see
 
