@@ -6,6 +6,13 @@ h1 {
     text-transform: none;
 }
 
+h2 {
+    font-size: 1.8rem;
+    margin: 1.8rem 0 0 0;
+}
+
+p { margin-top: 0.5rem }
+
 #body-inner > h3 {
     margin: 4rem 0 1rem 0 !important;
 }
