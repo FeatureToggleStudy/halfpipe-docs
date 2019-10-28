@@ -8,10 +8,9 @@ Check out some [sample projects](https://github.com/springernature/halfpipe-exam
 To use Halfpipe we need to join a GitHub team and install the CLIs for Halfpipe, Concourse (called "fly"), and Vault. They are all distributed as binaries which need to be executable and saved somewhere on your system's `PATH` (e.g. `/usr/local/bin`).
 
 ## GitHub
+Your user must be part of a team in the [SpringerNature GitHub Organisation](https://github.com/orgs/springernature/teams). These teams align with teams in Concourse and Vault. Your user must have a verified primary email otherwise you will not be able to login to Concourse. If you are not yet in a team you wish to be part of, ask a friendly person in that team or on Slack in `#github-admins`.
 
-Your user must be part of a team in the [SpringerNature GitHub Organisation](https://github.com/orgs/springernature/teams). These teams align with teams in Concourse and Vault. Your user must have a verified primary email otherwise you will not be able to login to Concourse.
-
-If you are not yet in a team you wish to be part of, ask a friendly person in that team or on Slack in `#github-admins`.
+You should now be able to login to Concourse using GitHub Auth: <https://concourse.halfpipe.io>
 
 The GitHub team `Springer Nature Read` needs **read access** to your repository for Concourse to be able to clone it.
 

@@ -1,6 +1,6 @@
 ---
 title: Migration from Auto Pipelines
-weight: 20
+weight: 141
 ---
 
 So you are about to migrate an app from Auto Pipelines to Halfpipe? Great, but first lets explore some of the similarities and differences between the two systems

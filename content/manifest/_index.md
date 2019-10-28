@@ -1,11 +1,11 @@
 ---
-title: HalfPipe Manifest
+title: Halfpipe Manifest
 weight: 40
 ---
 
 Everything in halfpipe is configured in what we call the manifest.
 
-The manifest __must__
+The manifest must
 
 * Be called `.halfpipe.io` or `.halfpipe.io.yml`
 * Be placed inside a git repository
@@ -863,7 +863,7 @@ This would create a pipeline that looks like
  
 i.e after `a` has run `b1`, `c1`, `d` will all start to execute in parallel. After `b1` has finished `b2` will start executing. After `c1` has finished `c2` then finally `c3` will execute. Once `b2`, `c3` and `d` have finished `e` will start executing.
 
-# Slack notifications
+## Slack notifications
 
 Sometimes you might need more fine grained controls over the slack notifications. In this case you can use the `notifications` configuration in your tasks.
 

@@ -3,35 +3,30 @@ title: Halfpipe CLI
 weight: 30
 ---
 
-## Install
-Download the latest cli and put it on your `$PATH`
+See [Getting Started](/getting-started#halfpipe) for installation instructions.
 
-<https://github.com/springernature/halfpipe/releases/latest>
+The primary function of the halfpipe CLI is to generate a valid Concourse pipeline from your [halfpipe manifest](/halfpipe-manifest). Try running `halfpipe` with no arguments in the same directory as your halfpipe manifest file. If there are no errors or warnings you will see a Concourse pipeline output to STDOUT. If Halfpipe found any issues it will list them and link to documentation to help resolve them.
 
-For example..
-```
-install ~/Downloads/halfpipe /usr/local/bin
-```
+To see all options run `halfpipe --help`.
 
-## Usage
+### halfpipe upload
 
-To generate the pipeline and upload to Concourse run this command from the root of your project (the same directory where your halfpipe manifest is):
+`halfpipe upload` is a convenience function that combines a number of steps into one:
 
-```
-halfpipe upload
-```
+1. generate the concourse pipeline
+2. use fly to log in to Concourse with fly using the team from the halfpipe manifest
+3. use fly to upload the pipeline to Concourse with the name from the halfpipe manifest
 
-If we could detect any issues with your halfpipe manifest, it will exit with a list of things to fix. Otherwise it will use fly to upload the pipeline to Concourse.
+If you are using the [update-pipeline](/auto-updating-pipelines/) feature, you will only need to upload the pipeline once, and from then on it will self-update.
 
-### the long way
+### halfpipe init
+`halfpipe init` gets a new project started with a template halfpipe manifest file.
 
-`halfpipe upload` is the same as first generating the pipeline to a file and uploading it with fly:
+### halfpipe migrate
+`halfpipe migrate` updates the halfpipe manifest to the latest schema.
 
-```bash
-halfpipe > pipeline.yml
-fly -t <TARGET_NAME> login -c https://concourse.halfpipe.io -n <TEAM_NAME>
-fly -t <TARGET_NAME> set-pipeline -p name-of-your-pipeline -c pipeline.yml
-```
-`TARGET_NAME` is a label you decide on for this login. Normally it is best to use the same as TEAM_NAME
+### halfpipe sync
+`halfpipe sync` updates halfpipe to the latest version.
 
-`TEAM_NAME` is the team in Concourse and GitHub
+### halfpipe url
+`halfpipe url` prints the url to the pipeline in the Concourse interface. Especially handy: `open $(halfpipe url)`.

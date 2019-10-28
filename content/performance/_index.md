@@ -97,7 +97,7 @@ There is currently a limitation in Halfpipe that means docker images used for [`
 
 ### Run tasks in parallel
 
-Use the [`parallel`](/manifest/#parallel-tasks) option.
+Use the [`parallel`](/manifest/#parallel) and [`sequence`](/manifest/#sequence) options.
 
 Use the [`pre_promote`](/manifest#deploy-cf) stage of [`deploy-cf`](/manifest#deploy-cf) to run smoke-tests and CDCs. These are automatically run in parallel.
 
