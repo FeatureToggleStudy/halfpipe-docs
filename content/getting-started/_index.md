@@ -27,15 +27,14 @@ The GitHub team `Springer Nature Read` needs **read access** to your repository 
   https://concourse.halfpipe.io
 2. Install the binary somewhere on your path<br>
   ```install fly /usr/local/bin```
-3. Login to Concourse
+3. Login to Concourse<br>
   ```fly -t ci login -c https://concourse.halfpipe.io -n <MY-TEAM>```
 
 ## Vault
 1. Download the binary for your OS from<br>
   https://www.vaultproject.io/downloads.html
 2. Install the binary somewhere on your path<br>
-  ```unzip vault_1.2.3_darwin_amd64.zip
-  install vault /usr/local/bin```
+  ```install vault /usr/local/bin```
 3. Create a personal token in GitHub at https://github.com/settings/tokens/new<br>
   Name it something cool, say `vault`, and select `read:org` under `admin:org`.<br>
   Save the token somewhere secret on your machine, you can always revoke and regenerate your token if you lose it :)

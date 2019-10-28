@@ -93,7 +93,8 @@ See the Oscar project for inspiration: <https://github.com/springernature/oscar/
 
 ### Docker Compose
 
-There is currently a limitation in Halfpipe that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container.
+There is currently a limitation that means docker images used for [`docker-compose`](/manifest#docker-compose) tasks are not cached. We hope to fix this, but for now consider using a [`run`](/manifest#run) task when the task only requires starting one container. Alternatively look at the [`docker-decompose`](/experimental-features/#docker-decompose) feature.
+
 
 ### Run tasks in parallel
 

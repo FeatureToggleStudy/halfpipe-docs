@@ -10,7 +10,7 @@ author = "Engineering Enablement"
 description = "Halfpipe docs"
 disableInlineCopyToClipBoard = true
 themeVariant = "custom"
-editURL = "https://github.com/springernature/halfpipe-docs/blob/master/"
+editURL = "https://github.com/springernature/halfpipe-docs/blob/master/content/"
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
