@@ -16,7 +16,7 @@ git submodule update --init
 ./run
 ```
 
-The site should be available at http://localhost:1313/
+The site should be available at http://localhost:1313/ and will live-update as you edit files.
 
 
 # Packaging
